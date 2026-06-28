@@ -1,5 +1,4 @@
 <x-layouts.app :meta-title="$metaTitle" :meta-description="$metaDescription">
-    <h1>TEST</h1>
     <section class="hero section">
         <div class="container hero-grid">
             <div class="hero-copy">
