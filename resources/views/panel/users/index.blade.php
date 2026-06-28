@@ -5,11 +5,11 @@
 @section('subtitle', 'مدیریت کاربران و دسترسی ورود به پنل مدیریت')
 
 @section('actions')
-    <a class="btn btn-primary" href="{{ route('panel.users.create') }}">کاربر جدید</a>
+    <x-panel.button :href="route('panel.users.create')" variant="primary">کاربر جدید</x-panel.button>
 @endsection
 
 @section('content')
-    <section class="panel-card" style="margin-bottom: 16px;">
+    <x-panel.card style="margin-bottom: 16px;">
         <form method="GET" action="{{ route('panel.users.index') }}" class="form-grid">
             <div class="form-field">
                 <label for="q">جستجو</label>
@@ -27,63 +27,65 @@
 
             <div class="form-field is-wide">
                 <div class="panel-actions">
-                    <button class="btn btn-primary" type="submit">اعمال فیلتر</button>
-                    <a class="btn btn-muted" href="{{ route('panel.users.index') }}">حذف فیلتر</a>
+                    <x-panel.button variant="primary" type="submit">اعمال فیلتر</x-panel.button>
+                    <x-panel.button :href="route('panel.users.index')">حذف فیلتر</x-panel.button>
                 </div>
             </div>
         </form>
-    </section>
+    </x-panel.card>
 
-    <section class="panel-card">
+    <x-panel.card>
         <div class="panel-help" style="margin-bottom: 12px;">
             تعداد کاربران دارای دسترسی پنل: {{ $panelUserCount }}
         </div>
 
-        <table class="panel-table">
-            <thead>
-                <tr>
-                    <th>نام</th>
-                    <th>ایمیل</th>
-                    <th>دسترسی پنل</th>
-                    <th>تاریخ ایجاد</th>
-                    <th>عملیات</th>
-                </tr>
-            </thead>
-            <tbody>
-                @forelse ($users as $user)
+        <x-panel.table-wrap>
+            <table class="panel-table">
+                <thead>
                     <tr>
-                        <td>
-                            {{ $user->name }}
-                            @if (auth()->user()->is($user))
-                                <span class="badge badge-muted">حساب فعلی</span>
-                            @endif
-                        </td>
-                        <td dir="ltr">{{ $user->email }}</td>
-                        <td>
-                            <span @class(['badge', 'badge-success' => $user->is_panel_user, 'badge-muted' => ! $user->is_panel_user])>
-                                {{ $user->is_panel_user ? 'دارد' : 'ندارد' }}
-                            </span>
-                        </td>
-                        <td>{{ $user->created_at?->format('Y-m-d') }}</td>
-                        <td>
-                            <div class="panel-actions">
-                                <a class="btn btn-muted" href="{{ route('panel.users.edit', $user) }}">ویرایش</a>
-                                <form method="POST" action="{{ route('panel.users.destroy', $user) }}" onsubmit="return confirm('این کاربر حذف شود؟')">
-                                    @csrf
-                                    @method('DELETE')
-                                    <button class="btn btn-danger" type="submit" @disabled(auth()->user()->is($user))>حذف</button>
-                                </form>
-                            </div>
-                        </td>
+                        <th>نام</th>
+                        <th>ایمیل</th>
+                        <th>دسترسی پنل</th>
+                        <th>تاریخ ایجاد</th>
+                        <th>عملیات</th>
                     </tr>
-                @empty
-                    <tr>
-                        <td colspan="5">کاربری با این فیلتر پیدا نشد.</td>
-                    </tr>
-                @endforelse
-            </tbody>
-        </table>
+                </thead>
+                <tbody>
+                    @forelse ($users as $user)
+                        <tr>
+                            <td>
+                                {{ $user->name }}
+                                @if (auth()->user()->is($user))
+                                    <x-panel.badge>حساب فعلی</x-panel.badge>
+                                @endif
+                            </td>
+                            <td dir="ltr">{{ $user->email }}</td>
+                            <td>
+                                <x-panel.badge :variant="$user->is_panel_user ? 'success' : 'muted'">
+                                    {{ $user->is_panel_user ? 'دارد' : 'ندارد' }}
+                                </x-panel.badge>
+                            </td>
+                            <td>{{ $user->created_at?->format('Y-m-d') }}</td>
+                            <td>
+                                <div class="panel-actions">
+                                    <x-panel.button :href="route('panel.users.edit', $user)">ویرایش</x-panel.button>
+                                    <form method="POST" action="{{ route('panel.users.destroy', $user) }}" onsubmit="return confirm('این کاربر حذف شود؟')">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button class="btn btn-danger" type="submit" @if (auth()->user()->is($user)) disabled @endif>حذف</button>
+                                    </form>
+                                </div>
+                            </td>
+                        </tr>
+                    @empty
+                        <tr>
+                            <td colspan="5">کاربری با این فیلتر پیدا نشد.</td>
+                        </tr>
+                    @endforelse
+                </tbody>
+            </table>
+        </x-panel.table-wrap>
 
         <div class="pagination">{{ $users->links() }}</div>
-    </section>
+    </x-panel.card>
 @endsection

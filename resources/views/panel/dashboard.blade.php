@@ -6,67 +6,50 @@
 
 @section('content')
     <section class="panel-grid cols-6" style="margin-bottom: 18px;">
-        <div class="panel-card">
-            <strong>{{ $productCount }}</strong>
-            <div class="panel-subtitle">محصول</div>
-        </div>
-        <div class="panel-card">
-            <strong>{{ $categoryCount }}</strong>
-            <div class="panel-subtitle">دسته‌بندی</div>
-        </div>
-        <div class="panel-card">
-            <strong>{{ $serviceCount }}</strong>
-            <div class="panel-subtitle">خدمت</div>
-        </div>
-        <div class="panel-card">
-            <strong>{{ $panelUserCount }}</strong>
-            <div class="panel-subtitle">کاربر پنل</div>
-        </div>
-        <div class="panel-card">
-            <strong>{{ $newContactCount }}</strong>
-            <div class="panel-subtitle">پیام جدید</div>
-        </div>
-        <div class="panel-card">
-            <strong>{{ $newQuoteCount }}</strong>
-            <div class="panel-subtitle">درخواست قیمت جدید</div>
-        </div>
+        <x-panel.stat :value="$productCount" label="محصول" />
+        <x-panel.stat :value="$categoryCount" label="دسته‌بندی" />
+        <x-panel.stat :value="$serviceCount" label="خدمت" />
+        <x-panel.stat :value="$panelUserCount" label="کاربر پنل" />
+        <x-panel.stat :value="$newContactCount" label="پیام جدید" />
+        <x-panel.stat :value="$newQuoteCount" label="درخواست قیمت جدید" />
     </section>
 
-    <section class="panel-card">
-        <div class="panel-topbar" style="margin-bottom: 10px;">
-            <h2 style="font-size: 1.2rem; margin: 0;">آخرین محصولات</h2>
-            <a class="btn btn-primary" href="{{ route('panel.products.create') }}">محصول جدید</a>
-        </div>
+    <x-panel.card>
+        <x-panel.section-head title="آخرین محصولات">
+            <x-panel.button :href="route('panel.products.create')" variant="primary">محصول جدید</x-panel.button>
+        </x-panel.section-head>
 
-        <table class="panel-table">
-            <thead>
-                <tr>
-                    <th>عنوان</th>
-                    <th>دسته‌بندی</th>
-                    <th>وضعیت</th>
-                    <th>عملیات</th>
-                </tr>
-            </thead>
-            <tbody>
-                @forelse ($latestProducts as $product)
+        <x-panel.table-wrap>
+            <table class="panel-table">
+                <thead>
                     <tr>
-                        <td>{{ $product->title }}</td>
-                        <td>{{ $product->category?->title ?? 'بدون دسته‌بندی' }}</td>
-                        <td>
-                            <span @class(['badge', 'badge-success' => $product->is_active, 'badge-muted' => ! $product->is_active])>
-                                {{ $product->is_active ? 'فعال' : 'غیرفعال' }}
-                            </span>
-                        </td>
-                        <td>
-                            <a class="btn btn-muted" href="{{ route('panel.products.edit', $product) }}">ویرایش</a>
-                        </td>
+                        <th>عنوان</th>
+                        <th>دسته‌بندی</th>
+                        <th>وضعیت</th>
+                        <th>عملیات</th>
                     </tr>
-                @empty
-                    <tr>
-                        <td colspan="4">هنوز محصولی ثبت نشده است.</td>
-                    </tr>
-                @endforelse
-            </tbody>
-        </table>
-    </section>
+                </thead>
+                <tbody>
+                    @forelse ($latestProducts as $product)
+                        <tr>
+                            <td>{{ $product->title }}</td>
+                            <td>{{ $product->category?->title ?? 'بدون دسته‌بندی' }}</td>
+                            <td>
+                                <x-panel.badge :variant="$product->is_active ? 'success' : 'muted'">
+                                    {{ $product->is_active ? 'فعال' : 'غیرفعال' }}
+                                </x-panel.badge>
+                            </td>
+                            <td>
+                                <x-panel.button :href="route('panel.products.edit', $product)">ویرایش</x-panel.button>
+                            </td>
+                        </tr>
+                    @empty
+                        <tr>
+                            <td colspan="4">هنوز محصولی ثبت نشده است.</td>
+                        </tr>
+                    @endforelse
+                </tbody>
+            </table>
+        </x-panel.table-wrap>
+    </x-panel.card>
 @endsection

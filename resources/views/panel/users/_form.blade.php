@@ -47,7 +47,4 @@
     </div>
 </div>
 
-<div class="panel-actions" style="margin-top: 18px;">
-    <button class="btn btn-primary" type="submit">ذخیره</button>
-    <a class="btn btn-muted" href="{{ route('panel.users.index') }}">بازگشت</a>
-</div>
+<x-panel.form-actions :back="route('panel.users.index')" />

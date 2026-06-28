@@ -5,53 +5,55 @@
 @section('subtitle', 'مدیریت گروه‌های محصولات برای نمایش عمومی سایت')
 
 @section('actions')
-    <a class="btn btn-primary" href="{{ route('panel.product-categories.create') }}">دسته‌بندی جدید</a>
+    <x-panel.button :href="route('panel.product-categories.create')" variant="primary">دسته‌بندی جدید</x-panel.button>
 @endsection
 
 @section('content')
-    <section class="panel-card">
-        <table class="panel-table">
-            <thead>
-                <tr>
-                    <th>عنوان</th>
-                    <th>نامک</th>
-                    <th>محصولات</th>
-                    <th>ترتیب</th>
-                    <th>وضعیت</th>
-                    <th>عملیات</th>
-                </tr>
-            </thead>
-            <tbody>
-                @forelse ($categories as $category)
+    <x-panel.card>
+        <x-panel.table-wrap>
+            <table class="panel-table">
+                <thead>
                     <tr>
-                        <td>{{ $category->title }}</td>
-                        <td dir="ltr">{{ $category->slug }}</td>
-                        <td>{{ $category->products_count }}</td>
-                        <td>{{ $category->sort_order }}</td>
-                        <td>
-                            <span @class(['badge', 'badge-success' => $category->is_active, 'badge-muted' => ! $category->is_active])>
-                                {{ $category->is_active ? 'فعال' : 'غیرفعال' }}
-                            </span>
-                        </td>
-                        <td>
-                            <div class="panel-actions">
-                                <a class="btn btn-muted" href="{{ route('panel.product-categories.edit', $category) }}">ویرایش</a>
-                                <form method="POST" action="{{ route('panel.product-categories.destroy', $category) }}" onsubmit="return confirm('این دسته‌بندی حذف شود؟')">
-                                    @csrf
-                                    @method('DELETE')
-                                    <button class="btn btn-danger" type="submit">حذف</button>
-                                </form>
-                            </div>
-                        </td>
+                        <th>عنوان</th>
+                        <th>نامک</th>
+                        <th>محصولات</th>
+                        <th>ترتیب</th>
+                        <th>وضعیت</th>
+                        <th>عملیات</th>
                     </tr>
-                @empty
-                    <tr>
-                        <td colspan="6">هنوز دسته‌بندی ثبت نشده است.</td>
-                    </tr>
-                @endforelse
-            </tbody>
-        </table>
+                </thead>
+                <tbody>
+                    @forelse ($categories as $category)
+                        <tr>
+                            <td>{{ $category->title }}</td>
+                            <td dir="ltr">{{ $category->slug }}</td>
+                            <td>{{ $category->products_count }}</td>
+                            <td>{{ $category->sort_order }}</td>
+                            <td>
+                                <x-panel.badge :variant="$category->is_active ? 'success' : 'muted'">
+                                    {{ $category->is_active ? 'فعال' : 'غیرفعال' }}
+                                </x-panel.badge>
+                            </td>
+                            <td>
+                                <div class="panel-actions">
+                                    <x-panel.button :href="route('panel.product-categories.edit', $category)">ویرایش</x-panel.button>
+                                    <form method="POST" action="{{ route('panel.product-categories.destroy', $category) }}" onsubmit="return confirm('این دسته‌بندی حذف شود؟')">
+                                        @csrf
+                                        @method('DELETE')
+                                        <x-panel.button variant="danger" type="submit">حذف</x-panel.button>
+                                    </form>
+                                </div>
+                            </td>
+                        </tr>
+                    @empty
+                        <tr>
+                            <td colspan="6">هنوز دسته‌بندی ثبت نشده است.</td>
+                        </tr>
+                    @endforelse
+                </tbody>
+            </table>
+        </x-panel.table-wrap>
 
         <div class="pagination">{{ $categories->links() }}</div>
-    </section>
+    </x-panel.card>
 @endsection
