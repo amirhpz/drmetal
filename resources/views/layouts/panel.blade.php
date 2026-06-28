@@ -99,6 +99,9 @@
         .panel-grid.cols-5 {
             grid-template-columns: repeat(5, minmax(0, 1fr));
         }
+        .panel-grid.cols-6 {
+            grid-template-columns: repeat(6, minmax(0, 1fr));
+        }
         .panel-actions {
             align-items: center;
             display: flex;
@@ -270,6 +273,7 @@
                 position: static;
             }
             .panel-grid.cols-5,
+            .panel-grid.cols-6,
             .form-grid {
                 grid-template-columns: 1fr;
             }
@@ -285,6 +289,7 @@
             <a class="panel-brand" href="{{ route('panel.dashboard') }}">پنل دکتر متال</a>
             <nav class="panel-nav" aria-label="ناوبری پنل">
                 <a href="{{ route('panel.dashboard') }}" @class(['is-active' => request()->routeIs('panel.dashboard')])>داشبورد</a>
+                <a href="{{ route('panel.users.index') }}" @class(['is-active' => request()->routeIs('panel.users.*')])>کاربران پنل</a>
                 <a href="{{ route('panel.product-categories.index') }}" @class(['is-active' => request()->routeIs('panel.product-categories.*')])>دسته‌بندی محصولات</a>
                 <a href="{{ route('panel.products.index') }}" @class(['is-active' => request()->routeIs('panel.products.*')])>محصولات</a>
                 <a href="{{ route('home') }}" target="_blank">مشاهده سایت</a>

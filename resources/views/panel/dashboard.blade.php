@@ -5,7 +5,7 @@
 @section('subtitle', 'نمای کلی محتوای عمومی سایت')
 
 @section('content')
-    <section class="panel-grid cols-5" style="margin-bottom: 18px;">
+    <section class="panel-grid cols-6" style="margin-bottom: 18px;">
         <div class="panel-card">
             <strong>{{ $productCount }}</strong>
             <div class="panel-subtitle">محصول</div>
@@ -17,6 +17,10 @@
         <div class="panel-card">
             <strong>{{ $serviceCount }}</strong>
             <div class="panel-subtitle">خدمت</div>
+        </div>
+        <div class="panel-card">
+            <strong>{{ $panelUserCount }}</strong>
+            <div class="panel-subtitle">کاربر پنل</div>
         </div>
         <div class="panel-card">
             <strong>{{ $newContactCount }}</strong>

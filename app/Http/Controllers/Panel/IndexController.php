@@ -8,6 +8,7 @@ use App\Models\Product;
 use App\Models\ProductCategory;
 use App\Models\QuoteRequest;
 use App\Models\Service;
+use App\Models\User;
 use Illuminate\View\View;
 
 class IndexController extends Controller
@@ -18,6 +19,7 @@ class IndexController extends Controller
             'productCount' => Product::query()->count(),
             'categoryCount' => ProductCategory::query()->count(),
             'serviceCount' => Service::query()->count(),
+            'panelUserCount' => User::query()->where('is_panel_user', true)->count(),
             'newContactCount' => ContactMessage::query()->where('status', 'new')->count(),
             'newQuoteCount' => QuoteRequest::query()->where('status', 'new')->count(),
             'latestProducts' => Product::query()

@@ -7,6 +7,7 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\Panel\IndexController as PanelIndexController;
 use App\Http\Controllers\Panel\ProductCategoryController as PanelProductCategoryController;
 use App\Http\Controllers\Panel\ProductController as PanelProductController;
+use App\Http\Controllers\Panel\UserController as PanelUserController;
 use App\Http\Controllers\ProductPageController;
 use App\Http\Controllers\QuoteRequestController;
 use App\Http\Controllers\ServicePageController;
@@ -37,6 +38,7 @@ Route::middleware(['auth', 'panel'])
     ->group(function (): void {
         Route::get('/', [PanelIndexController::class, 'index'])->name('dashboard');
         Route::post('/logout', [PanelLoginController::class, 'destroy'])->name('logout');
+        Route::resource('users', PanelUserController::class)->except('show');
         Route::resource('product-categories', PanelProductCategoryController::class)->except('show');
         Route::resource('products', PanelProductController::class)->except('show');
     });
