@@ -1,4 +1,4 @@
-@php($companyName = \App\Support\SiteSettings::get('company.name', 'دکتر متالینیوم'))
+@php($companyName = \App\Support\SiteSettings::get('company.name', 'دکتر متال'))
 
 <header class="site-header">
     <div class="container header-inner">

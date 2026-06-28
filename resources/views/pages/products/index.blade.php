@@ -2,7 +2,7 @@
     <section class="products-hero">
         <div class="container products-hero-grid">
             <div>
-                <p class="eyebrow">کاتالوگ صنعتی دکتر متالینیوم</p>
+                <p class="eyebrow">کاتالوگ صنعتی دکتر متال</p>
                 <h1>بیلت، شمش و آلیاژهای آلومینیومی برای تامین پایدار تولید</h1>
                 <p>محصولات قابل تامین برای اکستروژن، ریخته‌گری و مصرف صنعتی با امکان هماهنگی گرید، بسته‌بندی، مقدار سفارش و برنامه تحویل.</p>
                 <div class="hero-actions">

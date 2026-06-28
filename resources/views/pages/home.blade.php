@@ -16,8 +16,8 @@
                     <span>مناسب همکاری B2B</span>
                 </div>
             </div>
-            <figure class="hero-image-card" aria-label="نمای محصولات آلومینیومی دکتر متالینیوم">
-                <img src="{{ asset('images/hero.png') }}" alt="محصولات آلومینیومی دکتر متالینیوم">
+            <figure class="hero-image-card" aria-label="نمای محصولات آلومینیومی دکتر متال">
+                <img src="{{ asset('images/hero.png') }}" alt="محصولات آلومینیومی دکتر متال">
             </figure>
         </div>
     </section>
@@ -111,7 +111,7 @@
 
     <section class="section">
         <div class="container">
-            <x-site.section-heading eyebrow="مزیت همکاری" title="چرا دکتر متالینیوم؟"/>
+            <x-site.section-heading eyebrow="مزیت همکاری" title="چرا دکتر متال؟"/>
             <div class="value-grid">
                 @foreach (['کیفیت پایدار', 'تحویل به‌موقع', 'قیمت رقابتی', 'کنترل دقیق', 'پشتیبانی تخصصی'] as $value)
                     <div class="value-item">{{ $value }}</div>

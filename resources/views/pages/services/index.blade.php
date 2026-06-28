@@ -2,7 +2,7 @@
     <section class="services-hero">
         <div class="container services-hero-grid">
             <div class="services-hero-copy">
-                <p class="eyebrow">خدمات صنعتی دکتر متالینیوم</p>
+                <p class="eyebrow">خدمات صنعتی دکتر متال</p>
                 <h1>زنجیره کامل تولید، کنترل کیفیت و تامین آلومینیوم</h1>
                 <p>از بررسی نیاز فنی تا آماده‌سازی، بسته‌بندی و هماهنگی تحویل؛ خدمات ما برای خریداران عمده، کارخانه‌ها و خطوط تولیدی طراحی شده که کیفیت پایدار و زمان‌بندی دقیق می‌خواهند.</p>
                 <div class="hero-actions">

@@ -111,8 +111,8 @@ return [
     */
 
     'from' => [
-        'address' => env('MAIL_FROM_ADDRESS', 'info@drmetalinium.com'),
-        'name' => env('MAIL_FROM_NAME', env('APP_NAME', 'drmetalinium')),
+        'address' => env('MAIL_FROM_ADDRESS', 'info@drmetal.com'),
+        'name' => env('MAIL_FROM_NAME', env('APP_NAME', 'Dr. Metal')),
     ],
 
     'notification_to' => env('CONTACT_NOTIFICATION_EMAIL'),

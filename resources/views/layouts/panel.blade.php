@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>@yield('title', 'پنل مدیریت') | آلومینیوم پارس</title>
+    <title>@yield('title', 'پنل مدیریت') | دکتر متال</title>
     <style>
         :root {
             --panel-bg: #f6f7f9;
@@ -282,7 +282,7 @@
 <body>
     <div class="panel-shell">
         <aside class="panel-sidebar">
-            <a class="panel-brand" href="{{ route('panel.dashboard') }}">پنل آلومینیوم پارس</a>
+            <a class="panel-brand" href="{{ route('panel.dashboard') }}">پنل دکتر متال</a>
             <nav class="panel-nav" aria-label="ناوبری پنل">
                 <a href="{{ route('panel.dashboard') }}" @class(['is-active' => request()->routeIs('panel.dashboard')])>داشبورد</a>
                 <a href="{{ route('panel.product-categories.index') }}" @class(['is-active' => request()->routeIs('panel.product-categories.*')])>دسته‌بندی محصولات</a>

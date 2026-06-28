@@ -3,7 +3,7 @@
         <div class="container inner-hero-grid">
             <div>
                 <h1>ارتباط با ما</h1>
-                <p>برای دریافت مشاوره، استعلام قیمت یا شروع همکاری با واحد فروش و تیم فنی دکتر متالینیوم در ارتباط
+                <p>برای دریافت مشاوره، استعلام قیمت یا شروع همکاری با واحد فروش و تیم فنی دکتر متال در ارتباط
                     باشید.</p>
             </div>
             <div class="hero-visual small-visual industrial-visual" aria-hidden="true">

@@ -1,6 +1,6 @@
-# Dr Metalinium
+# Dr. Metal
 
-Persian RTL Laravel website and lightweight management panel for an aluminium products company.
+Persian RTL Laravel website and lightweight management panel for Dr. Metal / دکتر متال.
 
 ## Setup
 
