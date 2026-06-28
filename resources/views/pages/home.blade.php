@@ -2,22 +2,23 @@
     <section class="hero section">
         <div class="container hero-grid">
             <div class="hero-copy">
-                <p class="eyebrow">تأمین صنعتی آلومینیوم</p>
-                <h1>تولیدکننده تخصصی بیلت و شمش آلومینیوم</h1>
-                <p>تأمین پایدار محصولات آلومینیومی با کیفیت صنعتی، کنترل دقیق و تحویل قابل اعتماد برای صنایع داخلی و
-                    صادراتی.</p>
+                <p class="eyebrow">{{ $company['slogan_en'] }}</p>
+                <h1>{{ $company['name_fa'] }}</h1>
+                <p>{{ $company['slogan_fa'] }} در صنعت فلزات</p>
+                <p>{{ $company['hero_description'] }}</p>
                 <div class="hero-actions">
-                    <a class="btn btn-primary" href="{{ route('products.index') }}">مشاهده محصولات</a>
-                    <a class="btn btn-secondary" href="{{ route('contact.index') }}">دریافت مشاوره</a>
+                    <a class="btn btn-primary" href="{{ route('services.index') }}">مشاهده خدمات</a>
+                    <a class="btn btn-secondary" href="{{ route('contact.index') }}">تماس با ما</a>
+                    <a class="btn btn-link" href="{{ route('about') }}">درباره دکتر متال</a>
                 </div>
                 <div class="trust-strip">
-                    <span>کنترل کیفی مستمر</span>
-                    <span>تولید پایدار</span>
-                    <span>مناسب همکاری B2B</span>
+                    <span>دانش‌پایه</span>
+                    <span>متالورژی صنعتی</span>
+                    <span>آلومینیوم و فلزات رنگین</span>
                 </div>
             </div>
-            <figure class="hero-image-card" aria-label="نمای محصولات آلومینیومی دکتر متال">
-                <img src="{{ asset('images/hero.png') }}" alt="محصولات آلومینیومی دکتر متال">
+            <figure class="hero-image-card" aria-label="نمای صنعتی صنایع متالورژی دکتر متال">
+                <img src="{{ asset('images/hero.png') }}" alt="صنایع متالورژی دکتر متال">
             </figure>
         </div>
     </section>
@@ -26,7 +27,7 @@
         <div class="container">
             <div class="section-title-row">
                 <x-site.section-heading eyebrow="بازار فلزات" title="قیمت لحظه‌ای فلزات"
-                                        description="نمایی سریع از آخرین داده‌های موجود برای تصمیم‌گیری خرید و برنامه‌ریزی تامین."/>
+                    description="نمایی سریع از آخرین داده‌های موجود برای تصمیم‌گیری خرید و برنامه‌ریزی تامین."/>
                 <div class="price-section-actions">
                     <span>آخرین بروزرسانی: امروز</span>
                     <div class="swiper-controls" aria-label="کنترل اسلایدر قیمت فلزات">
@@ -39,11 +40,11 @@
                 @if ($loop->first)
                     <div class="price-swiper swiper" data-price-swiper>
                         <div class="price-grid swiper-wrapper">
-                            @endif
+                @endif
                             <div class="swiper-slide">
                                 <x-site.metal-price-card :price="$price"/>
                             </div>
-                            @if ($loop->last)
+                @if ($loop->last)
                         </div>
                     </div>
                     <div class="price-pagination" data-price-pagination aria-label="صفحه‌بندی قیمت فلزات"></div>
@@ -54,13 +55,44 @@
         </div>
     </section>
 
+    <section class="section tight-section">
+        <div class="container split-section">
+            <div>
+                <p class="eyebrow">Dr Metal Metallurgical Industries</p>
+                <h2>فعال در طراحی، تولید، بهینه‌سازی و تأمین محصولات فلزی</h2>
+                <p>{{ $company['intro'] }}</p>
+            </div>
+            <div class="factory-visual wide" aria-hidden="true"></div>
+        </div>
+    </section>
+
     <section class="section">
         <div class="container">
-            <x-site.section-heading eyebrow="خدمات" title="خدمات تخصصی زنجیره تأمین"
-                                    description="از تولید و کنترل کیفیت تا آماده‌سازی، بسته‌بندی و هماهنگی ارسال."/>
-            <div class="card-grid service-grid-large">
-                @foreach ($featuredServices as $service)
-                    <x-site.service-card :service="$service"/>
+            <x-site.section-heading eyebrow="Fields of Activity" title="زمینه‌های فعالیت"
+                :description="$company['fields_description']" />
+            <div class="card-grid">
+                @foreach ($company['fields'] as $field)
+                    <article class="card activity-card">
+                        <span class="activity-number">{{ \App\Support\PersianNumber::digits($loop->iteration) }}</span>
+                        <h3>{{ $field['title'] }}</h3>
+                        <p>{{ $field['description'] }}</p>
+                    </article>
+                @endforeach
+            </div>
+        </div>
+    </section>
+
+    <section class="section tight-section">
+        <div class="container founder-highlight">
+            <div>
+                <p class="eyebrow">{{ $company['founder']['title'] }}</p>
+                <h2>{{ $company['founder']['name'] }}</h2>
+                <p>{{ $company['founder']['description'] }}</p>
+                <a class="btn btn-secondary" href="{{ route('about') }}">مطالعه بیشتر</a>
+            </div>
+            <div class="founder-mini-list">
+                @foreach (array_slice($company['founder']['achievements'], 0, 4) as $achievement)
+                    <span>{{ $achievement }}</span>
                 @endforeach
             </div>
         </div>
@@ -68,8 +100,41 @@
 
     <section class="section tight-section">
         <div class="container">
+            <x-site.section-heading eyebrow="Top Clients" title="مشتریان برتر" />
+            <div class="client-grid">
+                @foreach ($company['clients'] as $client)
+                    <article class="client-card">
+                        <strong>{{ $client['name'] }}</strong>
+                        <span>{{ $client['en'] }}</span>
+                    </article>
+                @endforeach
+            </div>
+            <div class="center-action">
+                <a class="btn btn-secondary" href="{{ route('clients.index') }}">مشاهده مشتریان</a>
+            </div>
+        </div>
+    </section>
+
+    <section class="section tight-section">
+        <div class="container certifications-strip">
+            <div>
+                <p class="eyebrow">Certifications & Approvals</p>
+                <h2>گواهینامه‌ها و تأییدیه‌ها</h2>
+                <p>استانداردهای ISO، IMS و HSE به عنوان بخشی از اعتبار صنعتی مجموعه معرفی شده‌اند و قابل اصلاح در ساختار محتوایی سایت هستند.</p>
+            </div>
+            <div class="cert-pill-row">
+                @foreach (['ISO', 'IMS', 'HSE'] as $cert)
+                    <span>{{ $cert }}</span>
+                @endforeach
+            </div>
+            <a class="btn btn-primary" href="{{ route('certifications.index') }}">مشاهده گواهینامه‌ها</a>
+        </div>
+    </section>
+
+    <section class="section tight-section">
+        <div class="container">
             <x-site.section-heading eyebrow="محصولات" title="محصولات اصلی"
-                                    description="محصولات پرکاربرد برای اکستروژن، ریخته‌گری و تامین مواد اولیه صنعتی."/>
+                description="محصولات و قطعات فلزی مرتبط با آلومینیوم و فلزات رنگین."/>
             <div class="product-strip">
                 @if ($featuredProducts->count() >= 4)
                     @foreach ($featuredProducts->take(4) as $product)
@@ -77,10 +142,10 @@
                     @endforeach
                 @else
                     @foreach ([
-                        ['title' => 'بیلت آلومینیوم 6063', 'spec' => 'اکستروژن پروفیل'],
-                        ['title' => 'بیلت آلومینیوم 6061', 'spec' => 'آلیاژ صنعتی'],
-                        ['title' => 'شمش آلومینیوم A7', 'spec' => 'خلوص 99.7٪'],
-                        ['title' => 'شمش آلومینیوم A8', 'spec' => 'مصرف ریخته‌گری'],
+                        ['title' => 'شمش آلیاژی آلومینیوم', 'spec' => 'رده‌های خشک و نرم'],
+                        ['title' => 'قطعات آلومینیومی دایکاست', 'spec' => 'طراحی و تولید صنعتی'],
+                        ['title' => 'ورق آلومینیومی', 'spec' => 'بر اساس نیاز فنی'],
+                        ['title' => 'فلزات رنگین', 'spec' => 'آلومینیوم و مس'],
                     ] as $fallback)
                         <article class="card product-card">
                             <div class="visual-placeholder" aria-hidden="true"><span>{{ $fallback['spec'] }}</span></div>
@@ -99,33 +164,12 @@
         </div>
     </section>
 
-    <section class="stats-band container">
-        @foreach ([['۲۵+', 'سال تجربه', 'در صنعت آلومینیوم'], ['۱۵۰,۰۰۰', 'تن ظرفیت سالانه', 'تولید بیلت و شمش'], ['۵۰۰+', 'مشتری فعال', 'در داخل و خارج از کشور'], ['۲۰+', 'کشور صادراتی', 'در آسیا، اروپا و خاورمیانه']] as $stat)
-            <div class="stat-item">
-                <strong>{{ $stat[0] }}</strong>
-                <span>{{ $stat[1] }}</span>
-                <small>{{ $stat[2] }}</small>
-            </div>
-        @endforeach
-    </section>
-
-    <section class="section">
-        <div class="container">
-            <x-site.section-heading eyebrow="مزیت همکاری" title="چرا دکتر متال؟"/>
-            <div class="value-grid">
-                @foreach (['کیفیت پایدار', 'تحویل به‌موقع', 'قیمت رقابتی', 'کنترل دقیق', 'پشتیبانی تخصصی'] as $value)
-                    <div class="value-item">{{ $value }}</div>
-                @endforeach
-            </div>
-        </div>
-    </section>
-
     <section class="section">
         <div class="container final-cta">
-            <h2>برای استعلام قیمت و دریافت مشاوره آماده‌ایم</h2>
+            <h2>برای شروع همکاری با صنایع متالورژی دکتر متال در ارتباط باشید.</h2>
             <div>
                 <a class="btn btn-primary" href="{{ route('contact.index') }}">تماس با ما</a>
-                <a class="btn btn-secondary" href="{{ route('contact.index') }}#quote">درخواست مشاوره</a>
+                <a class="btn btn-secondary" href="{{ route('services.index') }}">زمینه‌های فعالیت</a>
             </div>
         </div>
     </section>

@@ -111,7 +111,7 @@ return [
     */
 
     'from' => [
-        'address' => env('MAIL_FROM_ADDRESS', 'info@drmetal.com'),
+        'address' => env('MAIL_FROM_ADDRESS', 'info@drmetalco.ir'),
         'name' => env('MAIL_FROM_NAME', env('APP_NAME', 'Dr. Metal')),
     ],
 

@@ -3,7 +3,7 @@
         <div class="container inner-hero-grid">
             <div>
                 <h1>ارتباط با ما</h1>
-                <p>برای دریافت مشاوره، استعلام قیمت یا شروع همکاری با واحد فروش و تیم فنی دکتر متال در ارتباط
+                <p>برای دریافت مشاوره، بررسی همکاری صنعتی یا ارتباط با صنایع متالورژی دکتر متال در ارتباط
                     باشید.</p>
             </div>
             <div class="hero-visual small-visual industrial-visual" aria-hidden="true">
@@ -27,7 +27,7 @@
             </article>
             <article class="contact-info-card">
                 <x-site.icon name="mail"/>
-                <strong>ایمیل</strong><span>{{ $contactSettings['contact.email'] ?? 'ثبت نشده' }}</span></article>
+                <strong>وب‌سایت</strong><span>{{ $company['website'] }}</span></article>
             <article class="contact-info-card">
                 <x-site.icon name="clock"/>
                 <strong>ساعات کاری</strong><span>{{ $contactSettings['contact.working_hours'] ?? 'ثبت نشده' }}</span>
@@ -53,7 +53,7 @@
                         فروش: {{ $contactSettings['contact.sales_phone'] ?? 'ثبت نشده' }}</a></div>
                 <div class="contact-line">
                     <x-site.icon name="mail"/>
-                    <a href="mailto:{{ $contactSettings['contact.email'] ?? '' }}">{{ $contactSettings['contact.email'] ?? 'ثبت نشده' }}</a>
+                    <a href="https://{{ $company['website'] }}" target="_blank" rel="noopener">{{ $company['website'] }}</a>
                 </div>
                 <div class="contact-line">
                     <x-site.icon name="clock"/>
@@ -149,7 +149,7 @@
         <div class="container">
             <x-site.section-heading title="ارتباط با واحدها"/>
             <div class="card-grid compact-grid">
-                @foreach ([['واحد فروش', 'استعلام قیمت، پیش‌فاکتور و برنامه تامین'], ['پشتیبانی فنی', 'مشاوره گرید، کاربرد و مشخصات محصول'], ['امور صادرات', 'هماهنگی سفارش‌های خارجی و بسته‌بندی صادراتی']] as $department)
+                @foreach ([['واحد فروش', 'بررسی همکاری، استعلام و برنامه تامین'], ['پشتیبانی فنی', 'مشاوره آلیاژ، قطعه، کاربرد و مشخصات محصول'], ['امور صنعتی', 'هماهنگی نیازهای تولید، طراحی و تأمین']] as $department)
                     <article class="card department-card">
                         <h3>{{ $department[0] }}</h3>
                         <p>{{ $department[1] }}</p>

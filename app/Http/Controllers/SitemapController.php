@@ -12,6 +12,8 @@ class SitemapController extends Controller
         $urls = collect([
             route('home'),
             route('services.index'),
+            route('clients.index'),
+            route('certifications.index'),
             route('products.index'),
             route('about'),
             route('contact.index'),

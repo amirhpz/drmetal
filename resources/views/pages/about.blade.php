@@ -2,12 +2,13 @@
     <section class="inner-hero section">
         <div class="container inner-hero-grid about-visual-hero">
             <div>
-                <h1>درباره {{ $settings['company.name'] ?? 'دکتر متال' }}</h1>
-                <p>تولیدکننده و تأمین‌کننده صنعتی بیلت و شمش آلومینیوم با تمرکز بر کیفیت پایدار، قابلیت اتکا و همکاری بلندمدت با صنایع داخلی و صادراتی.</p>
+                <p class="eyebrow">{{ $company['name_en'] }}</p>
+                <h1>درباره {{ $company['name_fa'] }}</h1>
+                <p>{{ $company['slogan_fa'] }}؛ رویکردی دانش‌پایه در طراحی، تولید، بهینه‌سازی و تأمین محصولات فلزی.</p>
                 <div class="trust-strip">
-                    <span>کیفیت پایدار</span>
-                    <span>تولید پیشرفته</span>
-                    <span>همکاری صنعتی</span>
+                    <span>نزدیک به یک دهه نام نیک</span>
+                    <span>تخصص متالورژی</span>
+                    <span>فلزات رنگین</span>
                 </div>
             </div>
             <div class="factory-visual industrial-visual" aria-hidden="true">
@@ -20,22 +21,8 @@
         <div class="container split-section">
             <div class="factory-visual wide" aria-hidden="true"></div>
             <div>
-                <h2>داستان ما</h2>
-                <p>{{ $settings['about.story'] ?? 'دکتر متال با نگاه صنعتی و بلندمدت شکل گرفته است؛ تمرکز ما بر تولید محصولات آلومینیومی قابل اتکا، کنترل دقیق کیفیت و پاسخ‌گویی منظم به نیاز کارخانه‌ها و تولیدکنندگان است. ساختار فعلی سایت برای اتصال به پنل مدیریت آینده آماده شده و اطلاعات تکمیلی شرکت در آن مرحله قابل توسعه خواهد بود.' }}</p>
-            </div>
-        </div>
-    </section>
-
-    <section class="section tight-section">
-        <div class="container">
-            <x-site.section-heading title="مسیر رشد" />
-            <div class="timeline-grid">
-                @foreach ([['۱۳۸۵', 'آغاز فعالیت'], ['۱۳۹۲', 'توسعه خطوط تولید'], ['۱۳۹۷', 'دریافت گواهینامه‌ها'], ['۱۴۰۰', 'توسعه صادرات'], ['۱۴۰۳', 'افزایش ظرفیت تولید']] as $item)
-                    <div class="timeline-item">
-                        <strong>{{ $item[0] }}</strong>
-                        <span>{{ $item[1] }}</span>
-                    </div>
-                @endforeach
+                <h2>معرفی شرکت</h2>
+                <p>{{ $settings['about.story'] ?? $company['intro'] }}</p>
             </div>
         </div>
     </section>
@@ -44,72 +31,68 @@
         <div class="container card-grid mission-grid">
             <article class="card">
                 <h2>ماموریت ما</h2>
-                <p>{{ $settings['about.mission'] ?? 'تامین محصولات قابل اتکا برای مشتریان صنعتی.' }}</p>
+                <p>{{ $settings['about.mission'] ?? 'توسعه راهکارهای دانش‌پایه در صنعت فلزات.' }}</p>
             </article>
             <article class="card">
                 <h2>چشم‌انداز ما</h2>
-                <p>{{ $settings['about.vision'] ?? 'تبدیل شدن به تامین‌کننده قابل اعتماد منطقه‌ای.' }}</p>
+                <p>{{ $settings['about.vision'] ?? 'تبدیل شدن به مرجع قابل اعتماد در صنعت فلزات رنگین.' }}</p>
             </article>
             <article class="card">
                 <h2>ارزش‌های ما</h2>
-                <p>کیفیت، شفافیت، مسئولیت‌پذیری، همکاری بلندمدت و احترام به تعهدات صنعتی.</p>
+                <p>دانش، فناوری، مسئولیت‌پذیری، کیفیت صنعتی، شفافیت و همکاری بلندمدت.</p>
             </article>
         </div>
     </section>
 
-    <section class="section tight-section">
-        <div class="container">
-            <x-site.section-heading title="ارزش‌های ما" />
-            <div class="value-grid">
-                @foreach (['اعتماد مشتری', 'تعهد', 'شفافیت', 'کیفیت پایدار', 'مسئولیت‌پذیری'] as $value)
-                    <div class="value-item">{{ $value }}</div>
-                @endforeach
+    <section class="section founder-section">
+        <div class="container founder-layout">
+            <div class="founder-card">
+                <p class="eyebrow">{{ $company['founder']['title'] }}</p>
+                <h2>{{ $company['founder']['name'] }}</h2>
+                <p>{{ $company['founder']['description'] }}</p>
             </div>
-        </div>
-    </section>
-
-    <section class="stats-band container">
-        @foreach ([['۲۵+', 'سال تجربه', 'در صنعت آلومینیوم'], ['۱۵۰,۰۰۰', 'تن ظرفیت سالانه', 'تولید بیلت و شمش'], ['۵۰۰+', 'مشتری فعال', 'در داخل و خارج از کشور'], ['۲۰+', 'کشور صادراتی', 'در آسیا، اروپا و خاورمیانه'], ['۹۸٪', 'رضایت مشتری', 'در همکاری‌های صنعتی']] as $stat)
-            <div class="stat-item">
-                <strong>{{ $stat[0] }}</strong>
-                <span>{{ $stat[1] }}</span>
-                <small>{{ $stat[2] }}</small>
-            </div>
-        @endforeach
-    </section>
-
-    <section class="section">
-        <div class="container">
-            <x-site.section-heading title="گواهینامه‌ها و استانداردها" />
-            <div class="certificate-grid">
-                @foreach (['ISO 9001', 'ISO 14001', 'ISO 45001', 'CE'] as $cert)
-                    <div class="certificate-card">
-                        <div class="certificate-paper"></div>
-                        <strong>{{ $cert }}</strong>
-                        <span>قابل تکمیل در پنل آینده</span>
-                    </div>
+            <div class="achievement-grid">
+                @foreach ($company['founder']['achievements'] as $achievement)
+                    <article>{{ $achievement }}</article>
                 @endforeach
             </div>
         </div>
     </section>
 
     <section class="section tight-section">
-        <div class="container factory-panel">
-            <div>
-                <h2>نمایی از کارخانه</h2>
-                <p>کارخانه دکتر متال مجهز به خطوط تولید پیشرفته، سیستم‌های کنترلی و آزمایشگاه تخصصی کنترل کیفیت است. این بخش برای تصاویر واقعی کارخانه در آینده آماده شده است.</p>
-                <a class="btn btn-primary" href="{{ route('contact.index') }}">تماس با ما</a>
+        <div class="container">
+            <x-site.section-heading eyebrow="Fields of Activity" title="زمینه‌های فعالیت" />
+            <div class="card-grid">
+                @foreach ($company['fields'] as $field)
+                    <article class="card activity-card">
+                        <h3>{{ $field['title'] }}</h3>
+                        <p>{{ $field['description'] }}</p>
+                    </article>
+                @endforeach
             </div>
-            <div class="factory-visual wide" aria-hidden="true"></div>
+        </div>
+    </section>
+
+    <section class="section tight-section">
+        <div class="container">
+            <x-site.section-heading eyebrow="Top Clients" title="بخشی از مشتریان برتر" />
+            <div class="client-grid">
+                @foreach ($company['clients'] as $client)
+                    <article class="client-card">
+                        <strong>{{ $client['name'] }}</strong>
+                        <span>{{ $client['en'] }}</span>
+                    </article>
+                @endforeach
+            </div>
         </div>
     </section>
 
     <section class="section">
         <div class="container final-cta">
-            <h2>برای شروع همکاری صنعتی با تیم فروش در ارتباط باشید.</h2>
+            <h2>برای آشنایی بیشتر با توانمندی‌های دکتر متال با ما در ارتباط باشید.</h2>
             <div>
                 <a class="btn btn-primary" href="{{ route('contact.index') }}">تماس با ما</a>
-                <a class="btn btn-secondary" href="{{ route('products.index') }}">مشاهده محصولات</a>
+                <a class="btn btn-secondary" href="{{ route('certifications.index') }}">گواهینامه‌ها</a>
             </div>
         </div>
     </section>

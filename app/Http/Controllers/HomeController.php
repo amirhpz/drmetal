@@ -17,6 +17,7 @@ class HomeController extends Controller
             'featuredServices' => Service::query()->active()->featured()->ordered()->take(6)->get(),
             'metalPrices' => $metalPriceService->getHomepagePrices(),
             'settings' => SiteSettings::group('company'),
+            'company' => config('company'),
             'metaTitle' => SiteSettings::get('seo.default_title', config('app.name')),
             'metaDescription' => SiteSettings::get('seo.default_description', ''),
         ]);

@@ -18,9 +18,10 @@ class ContactPageController extends Controller
     {
         return view('pages.contact', [
             'contactSettings' => SiteSettings::group('contact') + SiteSettings::group('company') + SiteSettings::group('social'),
+            'company' => config('company'),
             'products' => Product::query()->active()->ordered()->get(['id', 'title']),
-            'metaTitle' => 'تماس با فروش',
-            'metaDescription' => 'ارتباط با واحد فروش و ارسال درخواست قیمت محصولات آلومینیومی.',
+            'metaTitle' => 'تماس با دکتر متال',
+            'metaDescription' => 'اطلاعات تماس صنایع متالورژی دکتر متال، شماره تماس، وب‌سایت و آدرس دفتر و کارخانه.',
         ]);
     }
 

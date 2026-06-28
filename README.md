@@ -1,6 +1,6 @@
-# Dr. Metal
+# Dr Metal Metallurgical Industries
 
-Persian RTL Laravel website and lightweight management panel for Dr. Metal / دکتر متال.
+Persian RTL Laravel website and lightweight management panel for Dr Metal Metallurgical Industries / صنایع متالورژی دکتر متال.
 
 ## Setup
 

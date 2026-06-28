@@ -3,6 +3,8 @@
 use App\Http\Controllers\AboutPageController;
 use App\Http\Controllers\Auth\PanelLoginController;
 use App\Http\Controllers\ContactPageController;
+use App\Http\Controllers\CertificationPageController;
+use App\Http\Controllers\ClientPageController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\Panel\IndexController as PanelIndexController;
 use App\Http\Controllers\Panel\ProductCategoryController as PanelProductCategoryController;
@@ -17,6 +19,8 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('/services', [ServicePageController::class, 'index'])->name('services.index');
+Route::get('/clients', [ClientPageController::class, 'index'])->name('clients.index');
+Route::get('/certifications', [CertificationPageController::class, 'index'])->name('certifications.index');
 Route::get('/products', [ProductPageController::class, 'index'])->name('products.index');
 Route::get('/products/{product:slug}', [ProductPageController::class, 'show'])->name('products.show');
 Route::redirect('/about', '/about-us');

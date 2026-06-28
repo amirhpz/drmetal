@@ -9,13 +9,22 @@ class ServiceSeeder extends Seeder
 {
     public function run(): void
     {
+        Service::query()
+            ->whereIn('slug', [
+                'aluminum-billet-production',
+                'aluminum-ingot-production',
+                'quality-control-analysis',
+                'cutting-packaging',
+                'logistics-delivery',
+                'technical-consulting',
+            ])
+            ->update(['is_active' => false, 'is_featured' => false]);
+
         $services = [
-            ['title' => 'تولید بیلت آلومینیوم', 'slug' => 'aluminum-billet-production', 'short_description' => 'تولید بیلت قابل اتکا برای خطوط اکستروژن.', 'description' => 'بیلت آلومینیوم با تمرکز بر یکنواختی سطح، ترکیب پایدار و قابلیت سفارش در ابعاد مختلف تولید و عرضه می‌شود.', 'icon' => 'factory', 'sort_order' => 1],
-            ['title' => 'تولید شمش آلومینیوم', 'slug' => 'aluminum-ingot-production', 'short_description' => 'تولید شمش برای مصرف صنعتی و ریخته‌گری.', 'description' => 'فرایند تولید با تمرکز بر پایداری کیفیت، کنترل ترکیب و آماده‌سازی برای مصرف کارخانه‌ای انجام می‌شود.', 'icon' => 'supply', 'sort_order' => 2],
-            ['title' => 'کنترل کیفیت و آنالیز', 'slug' => 'quality-control-analysis', 'short_description' => 'بررسی فنی محصول پیش از تحویل.', 'description' => 'امکان آماده‌سازی اطلاعات فنی، نمونه‌برداری و کنترل مشخصات محصول برای سفارش‌های صنعتی فراهم است.', 'icon' => 'quality', 'sort_order' => 3],
-            ['title' => 'برش و بسته‌بندی', 'slug' => 'cutting-packaging', 'short_description' => 'آماده‌سازی محصول برای حمل و انبارش.', 'description' => 'برش، چیدمان و بسته‌بندی با توجه به نوع محصول، شرایط حمل و نیاز خریدار هماهنگ می‌شود.', 'icon' => 'package', 'sort_order' => 4],
-            ['title' => 'حمل و ارسال', 'slug' => 'logistics-delivery', 'short_description' => 'کمک به برنامه‌ریزی تحویل سفارش.', 'description' => 'تیم فروش می‌تواند هماهنگی‌های لازم برای زمان‌بندی و تحویل سفارش را با مشتری انجام دهد.', 'icon' => 'delivery', 'sort_order' => 5],
-            ['title' => 'مشاوره فنی', 'slug' => 'technical-consulting', 'short_description' => 'انتخاب گرید، محصول و شرایط تامین مناسب.', 'description' => 'برای انتخاب محصول، بررسی مشخصات فنی و برنامه‌ریزی همکاری بلندمدت، مشاوره تخصصی فروش و فنی ارائه می‌شود.', 'icon' => 'partnership', 'sort_order' => 6],
+            ['title' => 'طراحی، تولید و بهینه‌سازی شمش آلیاژی آلومینیوم', 'slug' => 'aluminum-alloy-ingot-design-production', 'short_description' => 'شمش آلیاژی آلومینیوم در رده‌های خشک و نرم.', 'description' => 'طراحی، تولید و بهینه‌سازی شمش آلیاژی آلومینیوم در رده‌های خشک و نرم با روش‌های روز دنیا و شیوه دانش‌پایه.', 'icon' => 'factory', 'sort_order' => 1],
+            ['title' => 'طراحی و تولید قطعات آلومینیومی دایکاست', 'slug' => 'aluminum-die-cast-parts', 'short_description' => 'تولید قطعات آلومینیومی به روش دایکاست.', 'description' => 'طراحی و تولید قطعات آلومینیومی به روش دایکاست برای نیازهای صنعتی و تولیدی.', 'icon' => 'quality', 'sort_order' => 2],
+            ['title' => 'طراحی و تولید ورق آلومینیومی', 'slug' => 'aluminum-sheet-design-production', 'short_description' => 'تولید و تأمین ورق آلومینیومی.', 'description' => 'طراحی و تولید ورق آلومینیومی با تمرکز بر کیفیت، کاربرد صنعتی و نیاز فنی مشتری.', 'icon' => 'package', 'sort_order' => 3],
+            ['title' => 'خرید و فروش فلزات رنگین', 'slug' => 'non-ferrous-metals-trading', 'short_description' => 'تأمین آلومینیوم، مس و سایر فلزات رنگین.', 'description' => 'خرید و فروش انواع فلزات رنگین، خصوصاً آلومینیوم و مس، با رویکرد تخصصی، شفاف و قابل اتکا.', 'icon' => 'supply', 'sort_order' => 4],
         ];
 
         foreach ($services as $service) {

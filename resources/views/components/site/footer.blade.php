@@ -7,7 +7,7 @@
     <div class="container footer-grid">
         <div class="footer-about">
             <h2>{{ $company['company.name'] ?? config('app.name') }}</h2>
-            <p>{{ $company['company.short_description'] ?? 'تامین صنعتی محصولات آلومینیومی.' }}</p>
+            <p>{{ $company['company.short_description'] ?? config('company.hero_description') }}</p>
             <div class="social-row" aria-label="شبکه‌های اجتماعی">
                 <span>in</span>
                 <span>wa</span>
@@ -17,22 +17,24 @@
         <div>
             <h3>دسترسی سریع</h3>
             <a href="{{ route('home') }}">خانه</a>
-            <a href="{{ route('services.index') }}">خدمات</a>
+            <a href="{{ route('services.index') }}">زمینه‌های فعالیت</a>
             <a href="{{ route('products.index') }}">محصولات</a>
+            <a href="{{ route('clients.index') }}">مشتریان</a>
+            <a href="{{ route('certifications.index') }}">گواهینامه‌ها</a>
             <a href="{{ route('about') }}">درباره ما</a>
             <a href="{{ route('contact.index') }}">تماس با ما</a>
         </div>
         <div>
-            <h3>محصولات</h3>
-            <a href="{{ route('products.index') }}">بیلت آلومینیوم</a>
-            <a href="{{ route('products.index') }}">شمش A7</a>
-            <a href="{{ route('products.index') }}">شمش A8</a>
-            <a href="{{ route('products.index') }}">تامین سفارشی</a>
+            <h3>زمینه‌ها</h3>
+            <a href="{{ route('services.index') }}">شمش آلیاژی آلومینیوم</a>
+            <a href="{{ route('services.index') }}">قطعات دایکاست</a>
+            <a href="{{ route('services.index') }}">ورق آلومینیومی</a>
+            <a href="{{ route('services.index') }}">فلزات رنگین</a>
         </div>
         <div>
             <h3>ارتباط با فروش</h3>
             <a href="tel:{{ $contact['contact.sales_phone'] ?? '' }}">{{ $contact['contact.sales_phone'] ?? 'ثبت نشده' }}</a>
-            <a href="mailto:{{ $contact['contact.email'] ?? '' }}">{{ $contact['contact.email'] ?? 'ثبت نشده' }}</a>
+            <a href="https://{{ config('company.website') }}" target="_blank" rel="noopener">{{ config('company.website') }}</a>
             <p>{{ $contact['contact.working_hours'] ?? 'ساعات کاری ثبت نشده' }}</p>
         </div>
     </div>

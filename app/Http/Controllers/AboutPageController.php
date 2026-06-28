@@ -11,8 +11,9 @@ class AboutPageController extends Controller
     {
         return view('pages.about', [
             'settings' => SiteSettings::group('about') + SiteSettings::group('company'),
-            'metaTitle' => 'درباره شرکت',
-            'metaDescription' => 'آشنایی با رویکرد شرکت در تولید و تامین محصولات آلومینیومی برای مشتریان صنعتی.',
+            'company' => config('company'),
+            'metaTitle' => 'درباره صنایع متالورژی دکتر متال',
+            'metaDescription' => 'آشنایی با صنایع متالورژی دکتر متال، بنیان‌گذار مجموعه و رویکرد دانش‌پایه در صنعت فلزات.',
         ]);
     }
 }

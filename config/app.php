@@ -13,7 +13,7 @@ return [
     |
     */
 
-    'name' => env('APP_NAME', 'Dr. Metal'),
+    'name' => env('APP_NAME', 'Dr Metal Metallurgical Industries'),
 
     /*
     |--------------------------------------------------------------------------

@@ -10,21 +10,21 @@ class SiteSettingSeeder extends Seeder
     public function run(): void
     {
         $settings = [
-            ['key' => 'company.name', 'value' => 'دکتر متال', 'group' => 'company', 'type' => 'text'],
-            ['key' => 'company.tagline', 'value' => 'تولیدکننده بیلت و شمش آلومینیوم', 'group' => 'company', 'type' => 'text'],
-            ['key' => 'company.short_description', 'value' => 'دکتر متال با تکیه بر فناوری روز، دانش فنی و تیم متخصص، محصولاتی با کیفیت بالا و مطابق با استانداردهای بین‌المللی تولید و عرضه می‌کند.', 'group' => 'company', 'type' => 'textarea'],
-            ['key' => 'company.address', 'value' => 'اصفهان، شهرک صنعتی جی، خیابان پنجم، بلوار صنعتگران، پلاک ۲۷', 'group' => 'company', 'type' => 'textarea'],
-            ['key' => 'contact.main_phone', 'value' => '031-33346678', 'group' => 'contact', 'type' => 'text'],
-            ['key' => 'contact.sales_phone', 'value' => '0913-123-4567', 'group' => 'contact', 'type' => 'text'],
-            ['key' => 'contact.email', 'value' => 'info@drmetal.com', 'group' => 'contact', 'type' => 'text'],
+            ['key' => 'company.name', 'value' => 'صنایع متالورژی دکتر متال', 'group' => 'company', 'type' => 'text'],
+            ['key' => 'company.tagline', 'value' => 'پرتوی فناوری و دانش', 'group' => 'company', 'type' => 'text'],
+            ['key' => 'company.short_description', 'value' => 'دکتر متال با تکیه بر دانش تخصصی، تجربه صنعتی و فناوری‌های نوین، در زمینه طراحی، تولید و بهینه‌سازی محصولات آلومینیومی و فلزات رنگین فعالیت می‌کند.', 'group' => 'company', 'type' => 'textarea'],
+            ['key' => 'company.address', 'value' => 'شهرک صنعتی عباس‌آباد، مولوی جنوبی، خیابان ۱۰/۷، پلاک ۵۷۳', 'group' => 'company', 'type' => 'textarea'],
+            ['key' => 'contact.main_phone', 'value' => '+۹۱۲۶۵۹۱۶۰۱۰', 'group' => 'contact', 'type' => 'text'],
+            ['key' => 'contact.sales_phone', 'value' => '+۹۱۲۶۵۹۱۶۰۱۰', 'group' => 'contact', 'type' => 'text'],
+            ['key' => 'contact.email', 'value' => '', 'group' => 'contact', 'type' => 'text'],
             ['key' => 'contact.working_hours', 'value' => 'شنبه تا چهارشنبه، ۸:۰۰ تا ۱۷:۰۰', 'group' => 'contact', 'type' => 'text'],
             ['key' => 'social.whatsapp', 'value' => '', 'group' => 'social', 'type' => 'text'],
             ['key' => 'social.telegram', 'value' => '', 'group' => 'social', 'type' => 'text'],
-            ['key' => 'seo.default_title', 'value' => 'دکتر متال | Dr. Metal | تولیدکننده بیلت و شمش آلومینیوم', 'group' => 'seo', 'type' => 'text'],
-            ['key' => 'seo.default_description', 'value' => 'دکتر متال (Dr. Metal)، تولیدکننده و تامین‌کننده بیلت و شمش آلومینیوم، محصولات آلیاژی، خدمات کنترل کیفیت و تامین صنعتی.', 'group' => 'seo', 'type' => 'textarea'],
-            ['key' => 'about.mission', 'value' => 'تولید و تامین محصولات آلومینیومی قابل اتکا برای مشتریان صنعتی با تمرکز بر کیفیت، شفافیت و استمرار تامین.', 'group' => 'about', 'type' => 'textarea'],
-            ['key' => 'about.vision', 'value' => 'تبدیل شدن به تامین‌کننده‌ای قابل اعتماد در زنجیره تامین آلومینیوم منطقه‌ای.', 'group' => 'about', 'type' => 'textarea'],
-            ['key' => 'about.story', 'value' => 'دکتر متال با هدف تامین نیاز صنایع داخلی به فلزات پایه، مسیر رشد پایدار را دنبال کرده است. تمرکز ما بر کیفیت محصول، بهبود مداوم فرایندها و ایجاد ارزش برای مشتریان صنعتی است.', 'group' => 'about', 'type' => 'textarea'],
+            ['key' => 'seo.default_title', 'value' => 'صنایع متالورژی دکتر متال | Dr Metal Metallurgical Industries', 'group' => 'seo', 'type' => 'text'],
+            ['key' => 'seo.default_description', 'value' => 'دکتر متال، فعال در طراحی، تولید، بهینه‌سازی و تأمین محصولات و قطعات فلزی، آلومینیوم و فلزات رنگین با شعار پرتوی فناوری و دانش.', 'group' => 'seo', 'type' => 'textarea'],
+            ['key' => 'about.mission', 'value' => 'توسعه راهکارهای دانش‌پایه در طراحی، تولید و بهینه‌سازی محصولات فلزی با تمرکز بر فناوری، تخصص متالورژی و اعتماد صنعتی.', 'group' => 'about', 'type' => 'textarea'],
+            ['key' => 'about.vision', 'value' => 'تبدیل شدن به مرجع قابل اعتماد در صنعت فلزات رنگین، آلومینیوم و قطعات صنعتی دانش‌پایه.', 'group' => 'about', 'type' => 'textarea'],
+            ['key' => 'about.story', 'value' => 'شرکت برتر فناوران راکا متشکل از تیمی متخصص، خوش‌فکر و پویا است که با نزدیک به یک دهه نام نیک در صنعت فلزات، با برند دکتر متال فعالیت می‌کند. این مجموعه در حوزه طراحی، تولید، بهینه‌سازی و تأمین محصولات و قطعات فلزی، به‌ویژه آلومینیوم و فلزات رنگین، فعالیت دارد.', 'group' => 'about', 'type' => 'textarea'],
         ];
 
         foreach ($settings as $setting) {
