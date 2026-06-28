@@ -384,6 +384,197 @@
             object-fit: cover;
             width: 100%;
         }
+        .product-form {
+            display: grid;
+            gap: 18px;
+        }
+        .product-editor-form {
+            display: block;
+        }
+        .product-form-section {
+            background: #fff;
+            border: 1px solid var(--panel-border);
+            border-radius: var(--panel-radius);
+            padding: 18px;
+        }
+        .product-form-section + .product-form-section {
+            margin-top: 0;
+        }
+        .product-form-section-head {
+            align-items: flex-start;
+            border-bottom: 1px solid var(--panel-border);
+            display: flex;
+            gap: 12px;
+            margin-bottom: 16px;
+            padding-bottom: 14px;
+        }
+        .product-form-section-head h2 {
+            font-size: 1.08rem;
+            line-height: 1.4;
+            margin: 0;
+        }
+        .product-form-section-head p {
+            color: var(--panel-muted);
+            margin: 3px 0 0;
+        }
+        .product-form-step {
+            align-items: center;
+            background: var(--panel-primary);
+            border-radius: var(--panel-radius);
+            color: #fff;
+            display: inline-flex;
+            flex: 0 0 34px;
+            font-weight: 900;
+            height: 34px;
+            justify-content: center;
+            width: 34px;
+        }
+        .upload-grid {
+            display: grid;
+            gap: 16px;
+            grid-template-columns: minmax(0, 1fr) minmax(0, 1.25fr);
+        }
+        .upload-card {
+            background: var(--panel-surface-soft);
+            border: 1px solid var(--panel-border);
+            border-radius: var(--panel-radius);
+            display: grid;
+            gap: 14px;
+            padding: 14px;
+        }
+        .upload-card-head {
+            align-items: flex-start;
+            display: flex;
+            gap: 12px;
+            justify-content: space-between;
+        }
+        .upload-card-head h3 {
+            font-size: 1rem;
+            line-height: 1.4;
+            margin: 0;
+        }
+        .upload-card-head p {
+            color: var(--panel-muted);
+            margin: 3px 0 0;
+        }
+        .upload-dropzone {
+            align-items: center;
+            background: #fff;
+            border: 1px dashed var(--panel-border-strong);
+            border-radius: var(--panel-radius);
+            cursor: pointer;
+            display: grid;
+            gap: 5px;
+            justify-items: center;
+            min-height: 168px;
+            padding: 18px;
+            text-align: center;
+            transition: border-color .15s ease, background .15s ease;
+        }
+        .upload-dropzone:hover {
+            background: #f9fbff;
+            border-color: rgba(37, 99, 235, .5);
+        }
+        .upload-dropzone input {
+            height: 1px;
+            opacity: 0;
+            overflow: hidden;
+            position: absolute;
+            width: 1px;
+        }
+        .upload-icon {
+            align-items: center;
+            background: var(--panel-primary);
+            border-radius: 999px;
+            color: #fff;
+            display: inline-flex;
+            font-size: 1.35rem;
+            font-weight: 800;
+            height: 42px;
+            justify-content: center;
+            line-height: 1;
+            width: 42px;
+        }
+        .upload-dropzone small,
+        .upload-preview-item span {
+            color: var(--panel-muted);
+            font-size: .82rem;
+        }
+        .current-image-card {
+            align-items: center;
+            background: #fff;
+            border: 1px solid var(--panel-border);
+            border-radius: var(--panel-radius);
+            display: flex;
+            gap: 12px;
+            padding: 10px;
+        }
+        .current-image-card img {
+            border-radius: 6px;
+            height: 88px;
+            object-fit: cover;
+            width: 118px;
+        }
+        .current-gallery-grid,
+        .upload-preview-grid {
+            display: grid;
+            gap: 10px;
+            grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+        }
+        .upload-preview-grid.single {
+            grid-template-columns: minmax(0, 180px);
+        }
+        .current-gallery-item,
+        .upload-preview-item {
+            background: #fff;
+            border: 1px solid var(--panel-border);
+            border-radius: var(--panel-radius);
+            display: grid;
+            gap: 8px;
+            padding: 8px;
+        }
+        .current-gallery-item img,
+        .upload-preview-item img {
+            aspect-ratio: 4 / 3;
+            border-radius: 6px;
+            object-fit: cover;
+            width: 100%;
+        }
+        .upload-preview-item span {
+            direction: ltr;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+        .specs-grid {
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+        }
+        .publish-options {
+            display: grid;
+            gap: 12px;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+        .toggle-card {
+            align-items: flex-start;
+            background: var(--panel-surface-soft);
+            border: 1px solid var(--panel-border);
+            border-radius: var(--panel-radius);
+            cursor: pointer;
+            display: flex;
+            gap: 10px;
+            padding: 14px;
+        }
+        .toggle-card input {
+            margin-top: 6px;
+        }
+        .toggle-card strong,
+        .toggle-card small {
+            display: block;
+        }
+        .toggle-card small {
+            color: var(--panel-muted);
+            margin-top: 2px;
+        }
         .pagination { margin-top: 16px; }
 
         @media (max-width: 1100px) {
@@ -406,7 +597,10 @@
             }
             .panel-grid.cols-5,
             .panel-grid.cols-6,
-            .form-grid {
+            .form-grid,
+            .upload-grid,
+            .specs-grid,
+            .publish-options {
                 grid-template-columns: 1fr;
             }
         }
@@ -414,6 +608,11 @@
             .panel-nav { grid-template-columns: 1fr; }
             .panel-main { padding: 14px; }
             .panel-card { padding: 14px; }
+            .product-form-section { padding: 14px; }
+            .current-image-card {
+                align-items: flex-start;
+                flex-direction: column;
+            }
         }
     </style>
 </head>
@@ -485,5 +684,6 @@
             @yield('content')
         </main>
     </div>
+    @stack('scripts')
 </body>
 </html>
