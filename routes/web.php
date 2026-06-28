@@ -9,6 +9,7 @@ use App\Http\Controllers\Panel\ProductCategoryController as PanelProductCategory
 use App\Http\Controllers\Panel\ProductController as PanelProductController;
 use App\Http\Controllers\Panel\UserController as PanelUserController;
 use App\Http\Controllers\ProductPageController;
+use App\Http\Controllers\PublicStorageController;
 use App\Http\Controllers\QuoteRequestController;
 use App\Http\Controllers\ServicePageController;
 use App\Http\Controllers\SitemapController;
@@ -26,6 +27,9 @@ Route::post('/contact-us', [ContactPageController::class, 'store'])->middleware(
 Route::post('/quote-request', [QuoteRequestController::class, 'store'])->middleware('throttle:quote-form')->name('quote.store');
 Route::get('/sitemap.xml', SitemapController::class)->name('sitemap');
 Route::get('/robots.txt', fn () => response("User-agent: *\nAllow: /\nSitemap: ".route('sitemap')."\n", 200, ['Content-Type' => 'text/plain']));
+Route::get('/storage/{path}', PublicStorageController::class)
+    ->where('path', '.*')
+    ->name('storage.public');
 
 Route::middleware('guest')->group(function (): void {
     Route::get('/panel/login', [PanelLoginController::class, 'create'])->name('panel.login');
