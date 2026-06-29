@@ -10,6 +10,7 @@ use App\Http\Controllers\Panel\IndexController as PanelIndexController;
 use App\Http\Controllers\Panel\ProductCategoryController as PanelProductCategoryController;
 use App\Http\Controllers\Panel\ProductController as PanelProductController;
 use App\Http\Controllers\Panel\PostController as PanelPostController;
+use App\Http\Controllers\PostPageController;
 use App\Http\Controllers\Panel\UserController as PanelUserController;
 use App\Http\Controllers\ProductPageController;
 use App\Http\Controllers\PublicStorageController;
@@ -24,6 +25,8 @@ Route::get('/clients', [ClientPageController::class, 'index'])->name('clients.in
 Route::get('/certifications', [CertificationPageController::class, 'index'])->name('certifications.index');
 Route::get('/products', [ProductPageController::class, 'index'])->name('products.index');
 Route::get('/products/{product:slug}', [ProductPageController::class, 'show'])->name('products.show');
+Route::get('/posts', [PostPageController::class, 'index'])->name('posts.index');
+Route::get('/posts/{post:slug}', [PostPageController::class, 'show'])->name('posts.show');
 Route::redirect('/about', '/about-us');
 Route::get('/about-us', [AboutPageController::class, 'index'])->name('about');
 Route::redirect('/contact', '/contact-us');

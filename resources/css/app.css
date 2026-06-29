@@ -2551,6 +2551,224 @@ select:focus {
     border-radius: var(--radius-sm);
 }
 
+.posts-hero,
+.post-detail-hero {
+    position: relative;
+    overflow: hidden;
+    padding-block: clamp(52px, 7vw, 96px);
+    background:
+        linear-gradient(135deg, rgba(255,255,255,.97), rgba(248,250,252,.92)),
+        repeating-linear-gradient(-45deg, rgba(31,42,55,.045) 0 1px, transparent 1px 34px);
+    border-bottom: 1px solid var(--color-border);
+}
+
+.posts-hero::before,
+.post-detail-hero::before {
+    content: "";
+    position: absolute;
+    inset-inline: 0;
+    top: 0;
+    height: 4px;
+    background: linear-gradient(90deg, var(--color-accent), transparent 64%);
+}
+
+.posts-hero-grid,
+.post-detail-hero-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(280px, 380px);
+    gap: clamp(28px, 6vw, 72px);
+    align-items: end;
+}
+
+.posts-hero h1,
+.post-detail-hero h1 {
+    max-width: 930px;
+    font-size: clamp(2rem, 3.4vw, 3.55rem);
+}
+
+.posts-hero p:not(.eyebrow),
+.post-detail-hero p:not(.eyebrow) {
+    max-width: 760px;
+}
+
+.posts-hero-panel,
+.post-detail-aside,
+.post-sidebar-card {
+    padding: 24px;
+    background: #fff;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-card);
+}
+
+.posts-hero-panel span,
+.post-detail-aside span {
+    display: block;
+    color: var(--color-soft);
+    font-size: .84rem;
+    font-weight: 900;
+}
+
+.posts-hero-panel strong,
+.post-detail-aside strong {
+    display: block;
+    margin-block: 8px;
+    color: var(--color-primary-dark);
+    font-size: clamp(1.6rem, 2.6vw, 2.65rem);
+    line-height: 1.2;
+}
+
+.featured-post-grid,
+.post-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 22px;
+}
+
+.post-card {
+    min-width: 0;
+    overflow: hidden;
+    background: #fff;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-card);
+    transition: transform .2s ease, border-color .2s ease, box-shadow .2s ease;
+}
+
+.post-card:hover {
+    transform: translateY(-3px);
+    border-color: rgba(217, 154, 43, .5);
+    box-shadow: 0 22px 50px rgba(17, 24, 39, .08);
+}
+
+.post-card-media {
+    position: relative;
+    display: grid;
+    place-items: center;
+    aspect-ratio: 16 / 10;
+    overflow: hidden;
+    color: var(--color-accent);
+    background:
+        linear-gradient(135deg, rgba(31,42,55,.94), rgba(17,24,39,.84)),
+        repeating-linear-gradient(-45deg, rgba(255,255,255,.1) 0 1px, transparent 1px 26px);
+    font-weight: 950;
+}
+
+.post-card-media img,
+.post-cover-image {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.post-card-media span {
+    padding: 8px 14px;
+    color: #fff;
+    background: rgba(255,255,255,.12);
+    border: 1px solid rgba(255,255,255,.16);
+    border-radius: 999px;
+}
+
+.post-card-body {
+    display: grid;
+    gap: 12px;
+    padding: 22px;
+}
+
+.post-card-body h2 {
+    margin: 0;
+    font-size: 1.15rem;
+    line-height: 1.55;
+}
+
+.post-card-body p {
+    margin: 0;
+    font-size: .95rem;
+}
+
+.post-meta,
+.post-detail-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    align-items: center;
+    color: var(--color-soft);
+    font-size: .86rem;
+    font-weight: 850;
+}
+
+.post-meta span,
+.post-detail-meta span,
+.post-detail-meta time {
+    display: inline-flex;
+    align-items: center;
+    min-height: 30px;
+    padding: 4px 10px;
+    background: var(--color-surface-muted);
+    border: 1px solid var(--color-border);
+    border-radius: 999px;
+}
+
+.post-read-link {
+    color: var(--color-primary);
+    font-weight: 900;
+}
+
+.post-read-link:hover {
+    color: var(--color-accent);
+}
+
+.post-card-featured {
+    display: grid;
+    grid-template-rows: auto 1fr;
+}
+
+.post-cover-section {
+    padding-block-start: 32px;
+}
+
+.post-cover-image {
+    max-height: 520px;
+    overflow: hidden;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-soft);
+}
+
+.post-content-layout {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(240px, 310px);
+    gap: clamp(24px, 5vw, 56px);
+    align-items: start;
+}
+
+.post-content {
+    padding: clamp(24px, 4vw, 42px);
+    color: var(--color-text);
+    background: #fff;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-card);
+    font-size: 1.05rem;
+    line-height: 2.15;
+}
+
+.post-sidebar {
+    position: sticky;
+    top: 100px;
+}
+
+.post-sidebar-card {
+    display: grid;
+    gap: 12px;
+}
+
+.post-sidebar-card strong {
+    color: var(--color-primary-dark);
+    font-size: 1.2rem;
+}
+
 .site-footer {
     padding-block: 54px 24px;
     color: rgba(255,255,255,.76);
@@ -2611,6 +2829,37 @@ select:focus {
     font-size: .92rem;
 }
 
+@media (max-width: 1080px) {
+    .brand {
+        min-width: 0;
+    }
+
+    .menu-toggle {
+        display: block;
+        margin-inline-start: auto;
+    }
+
+    .site-nav {
+        position: absolute;
+        inset-block-start: 76px;
+        inset-inline: 16px;
+        display: none;
+        padding: 10px;
+        background: #fff;
+        border: 1px solid var(--color-border);
+        border-radius: var(--radius-md);
+        box-shadow: var(--shadow-soft);
+    }
+
+    .site-nav.is-open {
+        display: grid;
+    }
+
+    .site-nav a {
+        padding: 12px 14px;
+    }
+}
+
 @media (max-width: 1180px) {
     .header-cta {
         display: none;
@@ -2632,6 +2881,11 @@ select:focus {
     }
 
     .services-feature-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .post-grid,
+    .featured-post-grid {
         grid-template-columns: repeat(2, minmax(0, 1fr));
     }
 
@@ -2657,6 +2911,9 @@ select:focus {
     .services-process-layout,
     .services-advantages,
     .products-hero-grid,
+    .posts-hero-grid,
+    .post-detail-hero-grid,
+    .post-content-layout,
     .product-detail-hero-grid,
     .product-detail-layout,
     .catalog-layout,
@@ -2753,6 +3010,10 @@ select:focus {
     }
 
     .services-process-copy {
+        position: static;
+    }
+
+    .post-sidebar {
         position: static;
     }
 
@@ -2877,6 +3138,8 @@ select:focus {
     .gallery-grid,
     .product-strip,
     .product-grid-detailed,
+    .post-grid,
+    .featured-post-grid,
     .catalog-product-grid,
     .feature-band,
     .timeline-grid,

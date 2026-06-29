@@ -21,6 +21,7 @@
             <a href="{{ route('products.index') }}">محصولات</a>
             <a href="{{ route('clients.index') }}">مشتریان</a>
             <a href="{{ route('certifications.index') }}">گواهینامه‌ها</a>
+            <a href="{{ route('posts.index') }}">مقالات</a>
             <a href="{{ route('about') }}">درباره ما</a>
             <a href="{{ route('contact.index') }}">تماس با ما</a>
         </div>
