@@ -67,7 +67,9 @@ class MetalPrice extends Model
 
     public function formattedPrice(): string
     {
-        return PersianNumber::digits(number_format((float) $this->price, 2));
+        $decimals = $this->currency === 'IRT' || $this->unit === 'تومان' ? 0 : 2;
+
+        return PersianNumber::digits(number_format((float) $this->price, $decimals));
     }
 
     public function formattedChangePercent(): string
