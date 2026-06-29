@@ -11,40 +11,125 @@ class ExternalMetalPriceProvider implements MetalPriceProvider
 {
     public function prices(): Collection
     {
-        $url = config('metals.provider_url');
         $apiKey = config('metals.api_key');
 
-        if (! $url || ! $apiKey) {
+        if (! $apiKey) {
             return collect();
         }
 
-        $response = Http::timeout(5)
+        $items = collect()
+            ->merge($this->commodityItems($apiKey))
+            ->merge($this->goldCurrencyItems($apiKey));
+
+        return $items
+            ->map(fn (array $item): MetalPrice => $this->toMetalPrice($item))
+            ->filter(fn (MetalPrice $price): bool => filled($price->symbol))
+            ->sortBy('sort_order')
+            ->values();
+    }
+
+    private function commodityItems(string $apiKey): Collection
+    {
+        $response = $this->get(config('metals.commodity_url'), $apiKey);
+
+        if (! $response) {
+            return collect();
+        }
+
+        return collect($response['metal_precious'] ?? [])
+            ->where('symbol', 'XAUUSD')
+            ->merge(collect($response['metal_base'] ?? [])->where('symbol', 'Al'))
+            ->values();
+    }
+
+    private function goldCurrencyItems(string $apiKey): Collection
+    {
+        $response = $this->get(config('metals.gold_currency_url'), $apiKey);
+
+        if (! $response) {
+            return collect();
+        }
+
+        return collect($response['currency'] ?? [])
+            ->whereIn('symbol', ['USD', 'EUR'])
+            ->values();
+    }
+
+    /**
+     * @return array<string, mixed>|null
+     */
+    private function get(?string $url, string $apiKey): ?array
+    {
+        if (! $url) {
+            return null;
+        }
+
+        $response = Http::timeout(10)
             ->acceptJson()
-            ->withToken($apiKey)
-            ->get($url);
+            ->get($url, ['key' => $apiKey]);
 
-        if (! $response->successful()) {
-            return collect();
-        }
+        return $response->successful() ? $response->json() : null;
+    }
 
-        $items = collect($response->json('data', []));
+    /**
+     * @param  array<string, mixed>  $item
+     */
+    private function toMetalPrice(array $item): MetalPrice
+    {
+        $symbol = (string) ($item['symbol'] ?? '');
+        $changePercent = $item['change_percent'] ?? null;
+        $timestamp = isset($item['time_unix']) ? now()->setTimestamp((int) $item['time_unix']) : now();
 
-        return $items->map(function (array $item): MetalPrice {
-            return new MetalPrice([
-                'name' => $item['name'] ?? '',
-                'symbol' => $item['symbol'] ?? '',
-                'price' => $item['price'] ?? null,
-                'unit' => $item['unit'] ?? null,
-                'currency' => $item['currency'] ?? 'USD',
-                'change_amount' => $item['change_amount'] ?? null,
-                'change_percent' => $item['change_percent'] ?? null,
-                'direction' => $item['direction'] ?? 'neutral',
-                'source' => 'api',
-                'provider' => $item['provider'] ?? 'external',
-                'last_updated_at' => now(),
-                'is_stale' => false,
-                'raw_payload' => $item,
-            ]);
-        })->filter(fn (MetalPrice $price): bool => filled($price->symbol));
+        return new MetalPrice([
+            'name' => $this->displayName($symbol, (string) ($item['name'] ?? '')),
+            'symbol' => $symbol,
+            'price' => $item['price'] ?? null,
+            'unit' => $item['unit'] ?? null,
+            'currency' => $this->currency($item),
+            'change_amount' => $item['change_value'] ?? null,
+            'change_percent' => $changePercent,
+            'direction' => $this->direction($changePercent),
+            'source' => 'api',
+            'provider' => 'BRS API',
+            'last_updated_at' => $timestamp,
+            'is_stale' => false,
+            'is_active' => true,
+            'sort_order' => config('metals.sort_order.'.$symbol, 100),
+            'raw_payload' => $item,
+        ]);
+    }
+
+    /**
+     * @param  array<string, mixed>  $item
+     */
+    private function currency(array $item): ?string
+    {
+        return match ($item['unit'] ?? null) {
+            'تومان' => 'IRT',
+            'دلار' => 'USD',
+            default => $item['unit'] ?? null,
+        };
+    }
+
+    private function direction(mixed $changePercent): string
+    {
+        $value = (float) ($changePercent ?? 0);
+
+        return match (true) {
+            $value > 0 => 'up',
+            $value < 0 => 'down',
+            default => 'neutral',
+        };
+    }
+
+    private function displayName(string $symbol, string $fallback): string
+    {
+        return match ($symbol) {
+            'XAUUSD' => 'طلا',
+            'Al' => 'آلومینیوم',
+            'USD' => 'دلار',
+            'EUR' => 'یورو',
+            default => $fallback,
+        };
     }
 }

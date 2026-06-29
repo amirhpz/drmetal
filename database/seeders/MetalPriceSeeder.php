@@ -9,20 +9,22 @@ class MetalPriceSeeder extends Seeder
 {
     public function run(): void
     {
+        MetalPrice::query()
+            ->whereNotIn('symbol', config('metals.homepage_symbols', ['XAUUSD', 'Al', 'USD', 'EUR']))
+            ->update(['is_active' => false]);
+
         $prices = [
-            ['name' => 'آلومینیوم', 'symbol' => 'AL', 'price' => 2500, 'unit' => 'دلار / تن', 'change_percent' => 0.42, 'direction' => 'up', 'sort_order' => 1],
-            ['name' => 'مس', 'symbol' => 'CU', 'price' => 9600, 'unit' => 'دلار / تن', 'change_percent' => -0.18, 'direction' => 'down', 'sort_order' => 2],
-            ['name' => 'طلا', 'symbol' => 'AU', 'price' => 2320, 'unit' => 'دلار / اونس', 'change_percent' => 0.24, 'direction' => 'up', 'sort_order' => 3],
-            ['name' => 'نقره', 'symbol' => 'AG', 'price' => 29.40, 'unit' => 'دلار / اونس', 'change_percent' => -0.08, 'direction' => 'down', 'sort_order' => 4],
-            ['name' => 'پلاتین', 'symbol' => 'PT', 'price' => 980, 'unit' => 'دلار / اونس', 'change_percent' => 0.16, 'direction' => 'up', 'sort_order' => 5],
-            ['name' => 'پالادیوم', 'symbol' => 'PD', 'price' => 925, 'unit' => 'دلار / اونس', 'change_percent' => -0.22, 'direction' => 'down', 'sort_order' => 6],
+            ['name' => 'طلا', 'symbol' => 'XAUUSD', 'price' => 3395.52, 'unit' => 'دلار', 'currency' => 'USD', 'change_percent' => -0.08, 'direction' => 'down', 'sort_order' => 1],
+            ['name' => 'آلومینیوم', 'symbol' => 'Al', 'price' => 2647.20, 'unit' => 'دلار', 'currency' => 'USD', 'change_percent' => 0.09, 'direction' => 'up', 'sort_order' => 2],
+            ['name' => 'دلار', 'symbol' => 'USD', 'price' => 81650, 'unit' => 'تومان', 'currency' => 'IRT', 'change_percent' => -0.91, 'direction' => 'down', 'sort_order' => 3],
+            ['name' => 'یورو', 'symbol' => 'EUR', 'price' => 91150, 'unit' => 'تومان', 'currency' => 'IRT', 'change_percent' => -0.86, 'direction' => 'down', 'sort_order' => 4],
         ];
 
         foreach ($prices as $price) {
             MetalPrice::query()->updateOrCreate(
                 ['symbol' => $price['symbol']],
                 $price + [
-                    'currency' => 'USD',
+                    'currency' => $price['currency'],
                     'source' => 'seed',
                     'provider' => 'seeded fallback',
                     'last_updated_at' => now(),

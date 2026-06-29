@@ -37,6 +37,21 @@ class MetalPriceService
         return $prices;
     }
 
+    public function refreshHomepagePrices(): Collection
+    {
+        Cache::forget('homepage_metal_prices');
+
+        $prices = $this->resolveHomepagePrices();
+
+        Cache::put(
+            'homepage_metal_prices',
+            $prices->map(fn (MetalPrice $price): array => $price->getAttributes())->all(),
+            (int) config('metals.cache_ttl', 300),
+        );
+
+        return $prices;
+    }
+
     private function resolveHomepagePrices(): Collection
     {
         try {
@@ -79,6 +94,8 @@ class MetalPriceService
                     'provider',
                     'last_updated_at',
                     'is_stale',
+                    'is_active',
+                    'sort_order',
                     'raw_payload',
                 ])
             );

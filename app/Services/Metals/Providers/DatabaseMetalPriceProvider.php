@@ -12,6 +12,7 @@ class DatabaseMetalPriceProvider implements MetalPriceProvider
     {
         return MetalPrice::query()
             ->active()
+            ->whereIn('symbol', config('metals.homepage_symbols', []))
             ->ordered()
             ->get();
     }
