@@ -20,6 +20,7 @@ class DatabaseSeeder extends Seeder
             ProductSeeder::class,
             ServiceSeeder::class,
             MetalPriceSeeder::class,
+            PostSeeder::class,
             PanelUserSeeder::class,
         ]);
     }

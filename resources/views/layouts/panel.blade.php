@@ -164,6 +164,7 @@
         }
         .panel-grid.cols-5 { grid-template-columns: repeat(5, minmax(0, 1fr)); }
         .panel-grid.cols-6 { grid-template-columns: repeat(6, minmax(0, 1fr)); }
+        .panel-grid.cols-7 { grid-template-columns: repeat(7, minmax(0, 1fr)); }
         .stat-card {
             min-height: 104px;
             padding: 16px;
@@ -579,6 +580,7 @@
 
         @media (max-width: 1100px) {
             .panel-grid.cols-6 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+            .panel-grid.cols-7 { grid-template-columns: repeat(4, minmax(0, 1fr)); }
         }
         @media (max-width: 900px) {
             .panel-shell { grid-template-columns: 1fr; }
@@ -597,6 +599,7 @@
             }
             .panel-grid.cols-5,
             .panel-grid.cols-6,
+            .panel-grid.cols-7,
             .form-grid,
             .upload-grid,
             .specs-grid,
@@ -635,6 +638,10 @@
                 <a href="{{ route('panel.users.index') }}" @class(['is-active' => request()->routeIs('panel.users.*')])>
                     <span class="panel-nav-icon">کا</span>
                     <span>کاربران پنل</span>
+                </a>
+                <a href="{{ route('panel.posts.index') }}" @class(['is-active' => request()->routeIs('panel.posts.*')])>
+                    <span class="panel-nav-icon">پس</span>
+                    <span>پست‌ها</span>
                 </a>
                 <a href="{{ route('panel.product-categories.index') }}" @class(['is-active' => request()->routeIs('panel.product-categories.*')])>
                     <span class="panel-nav-icon">دس</span>
