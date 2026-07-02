@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Http\Requests\ContactMessageRequest;
 use App\Mail\ContactMessageReceived;
 use App\Models\ContactMessage;
-use App\Models\Product;
 use App\Support\SiteSettings;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Log;
@@ -19,7 +18,6 @@ class ContactPageController extends Controller
         return view('pages.contact', [
             'contactSettings' => SiteSettings::group('contact') + SiteSettings::group('company') + SiteSettings::group('social'),
             'company' => config('company'),
-            'products' => Product::query()->active()->ordered()->get(['id', 'title']),
             'metaTitle' => 'تماس با دکتر متال',
             'metaDescription' => 'اطلاعات تماس صنایع متالورژی دکتر متال، شماره تماس، وب‌سایت و آدرس دفتر و کارخانه.',
         ]);

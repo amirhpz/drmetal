@@ -1,26 +1,24 @@
 <x-layouts.app :meta-title="$metaTitle" :meta-description="$metaDescription">
-    <section class="inner-hero section">
-        <div class="container inner-hero-grid">
-            <div>
-                <p class="eyebrow">Top Clients</p>
-                <h1>مشتریان برتر</h1>
-                <p>همکاری با مشتریان صنعتی معتبر، بخشی از اعتبار و مسیر رشد صنایع متالورژی دکتر متال است.</p>
-            </div>
-            <div class="factory-visual small-visual industrial-visual" aria-hidden="true">
-                <div class="ingot-stack"><span></span><span></span><span></span></div>
-            </div>
-        </div>
-    </section>
+    <x-site.page-hero path="خانه / مشتریان" label="Top Clients" title="مشتریان برتر" />
 
     <section class="section">
         <div class="container">
             <x-site.section-heading eyebrow="Clients" title="شرکای صنعتی و مشتریان" />
             <div class="client-grid large">
-                @foreach ($company['clients'] as $client)
+                @foreach ($clients as $client)
                     <article class="client-card">
-                        <span class="client-logo-text">{{ mb_substr($client['name'], 0, 1) }}</span>
-                        <strong>{{ $client['name'] }}</strong>
-                        <span>{{ $client['en'] }}</span>
+                        @if ($client->logo)
+                            <img class="client-logo-image" src="{{ asset($client->logo) }}" alt="{{ $client->name }}" loading="lazy">
+                        @else
+                            <span class="client-logo-text">{{ mb_substr($client->name, 0, 1) }}</span>
+                        @endif
+                        <strong>{{ $client->name }}</strong>
+                        @if ($client->english_name)
+                            <span>{{ $client->english_name }}</span>
+                        @endif
+                        @if ($client->industry)
+                            <small>{{ $client->industry }}</small>
+                        @endif
                     </article>
                 @endforeach
             </div>

@@ -28,7 +28,7 @@
             <a href="{{ route('services.index') }}" @class(['is-active' => request()->routeIs('services.*')])>زمینه‌های فعالیت</a>
             <a href="{{ route('products.index') }}" @class(['is-active' => request()->routeIs('products.*')])>محصولات</a>
             <a href="{{ route('clients.index') }}" @class(['is-active' => request()->routeIs('clients.*')])>مشتریان</a>
-            <a href="{{ route('certifications.index') }}" @class(['is-active' => request()->routeIs('certifications.*')])>گواهینامه‌ها</a>
+{{--            <a href="{{ route('certifications.index') }}" @class(['is-active' => request()->routeIs('certifications.*')])>گواهینامه‌ها</a>--}}
             <a href="{{ route('posts.index') }}" @class(['is-active' => request()->routeIs('posts.*')])>مقالات</a>
             <a href="{{ route('about') }}" @class(['is-active' => request()->routeIs('about')])>درباره ما</a>
             <a href="{{ route('contact.index') }}" @class(['is-active' => request()->routeIs('contact.*')])>تماس با ما</a>

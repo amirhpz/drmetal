@@ -7,6 +7,14 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class QuoteRequest extends Model
 {
+    public const STATUSES = [
+        'new' => 'جدید',
+        'in_review' => 'در حال بررسی',
+        'contacted' => 'تماس گرفته شد',
+        'quoted' => 'قیمت اعلام شد',
+        'closed' => 'بسته شده',
+    ];
+
     protected $fillable = [
         'product_id',
         'company_name',
@@ -24,5 +32,10 @@ class QuoteRequest extends Model
     public function product(): BelongsTo
     {
         return $this->belongsTo(Product::class);
+    }
+
+    public function statusLabel(): string
+    {
+        return self::STATUSES[$this->status] ?? $this->status;
     }
 }

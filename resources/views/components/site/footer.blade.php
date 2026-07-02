@@ -1,6 +1,7 @@
 @php
     $company = \App\Support\SiteSettings::group('company');
     $contact = \App\Support\SiteSettings::group('contact');
+    $website = $company['company.website'] ?? config('company.website');
 @endphp
 
 <footer class="site-footer">
@@ -35,7 +36,7 @@
         <div>
             <h3>ارتباط با فروش</h3>
             <a href="tel:{{ $contact['contact.sales_phone'] ?? '' }}">{{ $contact['contact.sales_phone'] ?? 'ثبت نشده' }}</a>
-            <a href="https://{{ config('company.website') }}" target="_blank" rel="noopener">{{ config('company.website') }}</a>
+            <a href="https://{{ $website }}" target="_blank" rel="noopener">{{ $website }}</a>
             <p>{{ $contact['contact.working_hours'] ?? 'ساعات کاری ثبت نشده' }}</p>
         </div>
     </div>

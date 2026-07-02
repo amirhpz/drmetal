@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Panel;
 
 use App\Http\Controllers\Controller;
 use App\Models\Post;
+use App\Models\PostCategory;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
@@ -17,6 +18,7 @@ class PostController extends Controller
     public function index(Request $request): View
     {
         $posts = Post::query()
+            ->with('postCategory')
             ->when($request->filled('q'), function ($query) use ($request): void {
                 $search = $request->string('q')->toString();
 
@@ -24,7 +26,8 @@ class PostController extends Controller
                     $query
                         ->where('title', 'like', '%'.$search.'%')
                         ->orWhere('slug', 'like', '%'.$search.'%')
-                        ->orWhere('category', 'like', '%'.$search.'%');
+                        ->orWhere('category', 'like', '%'.$search.'%')
+                        ->orWhereHas('postCategory', fn ($query) => $query->where('title', 'like', '%'.$search.'%'));
                 });
             })
             ->when($request->filled('status'), function ($query) use ($request): void {
@@ -37,15 +40,18 @@ class PostController extends Controller
                     default => null,
                 };
             })
+            ->when($request->filled('post_category_id'), fn ($query) => $query->where('post_category_id', $request->integer('post_category_id')))
             ->ordered()
             ->paginate(15)
             ->withQueryString();
 
         return view('panel.posts.index', [
             'posts' => $posts,
+            'categories' => $this->postCategories(),
             'filters' => [
                 'q' => $request->string('q')->toString(),
                 'status' => $request->string('status')->toString(),
+                'post_category_id' => $request->string('post_category_id')->toString(),
             ],
         ]);
     }
@@ -59,6 +65,7 @@ class PostController extends Controller
                 'is_featured' => false,
                 'sort_order' => 0,
             ]),
+            'categories' => $this->postCategories(),
         ]);
     }
 
@@ -80,6 +87,7 @@ class PostController extends Controller
     {
         return view('panel.posts.edit', [
             'post' => $post,
+            'categories' => $this->postCategories(),
         ]);
     }
 
@@ -128,7 +136,7 @@ class PostController extends Controller
             'body' => ['nullable', 'string'],
             'featured_image_file' => ['nullable', 'image', 'mimes:jpg,jpeg,png,webp', 'max:2048'],
             'remove_featured_image' => ['nullable', 'boolean'],
-            'category' => ['nullable', 'string', 'max:120'],
+            'post_category_id' => ['nullable', 'integer', 'exists:post_categories,id'],
             'author_name' => ['nullable', 'string', 'max:120'],
             'published_at' => ['nullable', 'date'],
             'sort_order' => ['nullable', 'integer', 'min:0'],
@@ -143,10 +151,13 @@ class PostController extends Controller
             'featured_image_file.image' => 'تصویر پست باید فایل تصویری باشد.',
             'featured_image_file.mimes' => 'فرمت تصویر پست باید jpg، jpeg، png یا webp باشد.',
             'featured_image_file.max' => 'حجم تصویر پست نباید بیشتر از ۲ مگابایت باشد.',
+            'post_category_id.exists' => 'دسته‌بندی انتخاب‌شده معتبر نیست.',
             'published_at.date' => 'تاریخ انتشار معتبر نیست.',
         ]);
 
         $data['slug'] = $data['slug'] ?: $this->uniqueSlug($data['title'], $post);
+        $data['body'] = $this->cleanPostBody($data['body'] ?? null);
+        $data['category'] = $this->categoryTitle($data['post_category_id'] ?? null);
         $data['published_at'] = blank($data['published_at'] ?? null) ? null : $data['published_at'];
         $data['is_active'] = $request->boolean('is_active');
         $data['is_featured'] = $request->boolean('is_featured');
@@ -223,5 +234,36 @@ class PostController extends Controller
         }
 
         return $slug;
+    }
+
+    /**
+     * @return \Illuminate\Support\Collection<int, PostCategory>
+     */
+    private function postCategories()
+    {
+        return PostCategory::query()->ordered()->get();
+    }
+
+    private function categoryTitle(null|int|string $categoryId): ?string
+    {
+        if (blank($categoryId)) {
+            return null;
+        }
+
+        return PostCategory::query()->whereKey($categoryId)->value('title');
+    }
+
+    private function cleanPostBody(?string $body): ?string
+    {
+        if (blank($body)) {
+            return null;
+        }
+
+        $allowedTags = '<p><br><strong><b><em><i><u><h2><h3><ul><ol><li><blockquote><a>';
+        $cleanBody = strip_tags($body, $allowedTags);
+        $cleanBody = preg_replace('/\s+on[a-z]+\s*=\s*(".*?"|\'.*?\'|[^\s>]+)/iu', '', $cleanBody) ?? $cleanBody;
+        $cleanBody = preg_replace('/\s(href)\s*=\s*([\'"])\s*(?!https?:|mailto:|tel:|\/|#).*?\2/iu', '', $cleanBody) ?? $cleanBody;
+
+        return trim($cleanBody);
     }
 }

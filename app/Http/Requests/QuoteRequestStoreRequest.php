@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class QuoteRequestStoreRequest extends FormRequest
 {
@@ -14,7 +15,11 @@ class QuoteRequestStoreRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'product_id' => ['nullable', 'integer', 'exists:products,id'],
+            'product_id' => [
+                'required',
+                'integer',
+                Rule::exists('products', 'id')->where('is_active', true),
+            ],
             'company_name' => ['nullable', 'string', 'max:160'],
             'contact_person' => ['required', 'string', 'max:120'],
             'phone' => ['required', 'string', 'max:30'],
@@ -28,6 +33,7 @@ class QuoteRequestStoreRequest extends FormRequest
     public function messages(): array
     {
         return [
+            'product_id.required' => 'محصول درخواست قیمت مشخص نیست.',
             'product_id.exists' => 'محصول انتخاب‌شده معتبر نیست.',
             'contact_person.required' => 'لطفا نام رابط را وارد کنید.',
             'phone.required' => 'لطفا شماره تماس را وارد کنید.',

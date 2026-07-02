@@ -4,14 +4,16 @@
 @endif
 
 @php($publishedAtValue = old('published_at', $post->published_at?->format('Y-m-d\TH:i')))
+@php($bodyValue = old('body', $post->body))
+@php($editorBody = preg_replace('/\s+on[a-z]+\s*=\s*(".*?"|\'.*?\'|[^\s>]+)/iu', '', strip_tags($bodyValue ?? '', '<p><br><strong><b><em><i><u><h2><h3><ul><ol><li><blockquote><a>')))
+@php($selectedCategoryId = old('post_category_id', $post->post_category_id ?: $categories->firstWhere('title', $post->category)?->id))
 
-<div class="product-form">
-    <section class="product-form-section">
-        <div class="product-form-section-head">
-            <span class="product-form-step">۱</span>
+<div class="product-form post-form">
+    <section class="product-form-section post-form-section">
+        <div class="product-form-section-head compact">
             <div>
                 <h2>اطلاعات اصلی پست</h2>
-                <p>عنوان، نامک، خلاصه و متن اصلی پست را وارد کنید.</p>
+                <p>عنوان، نامک و دسته‌بندی مقاله را تنظیم کنید.</p>
             </div>
         </div>
 
@@ -30,9 +32,19 @@
             </div>
 
             <div class="form-field">
-                <label for="category">دسته‌بندی</label>
-                <input id="category" name="category" value="{{ old('category', $post->category) }}" placeholder="آلومینیوم، دایکاست، فلزات رنگین">
-                @error('category') <span class="error-text">{{ $message }}</span> @enderror
+                <label for="post_category_id">دسته‌بندی</label>
+                <select id="post_category_id" name="post_category_id">
+                    <option value="">بدون دسته‌بندی</option>
+                    @foreach ($categories as $category)
+                        <option value="{{ $category->id }}" @selected((string) $selectedCategoryId === (string) $category->id)>{{ $category->title }}</option>
+                    @endforeach
+                </select>
+                <span class="panel-help">
+                    دسته‌بندی‌ها از بخش
+                    <a href="{{ route('panel.post-categories.index') }}">دسته‌بندی مقالات</a>
+                    مدیریت می‌شوند.
+                </span>
+                @error('post_category_id') <span class="error-text">{{ $message }}</span> @enderror
             </div>
 
             <div class="form-field">
@@ -46,18 +58,26 @@
                 <textarea id="excerpt" name="excerpt" rows="3" placeholder="خلاصه کوتاه برای کارت یا معرفی پست">{{ old('excerpt', $post->excerpt) }}</textarea>
                 @error('excerpt') <span class="error-text">{{ $message }}</span> @enderror
             </div>
-
-            <div class="form-field is-wide">
-                <label for="body">متن کامل</label>
-                <textarea id="body" name="body" rows="12" placeholder="متن کامل مقاله یا خبر را وارد کنید">{{ old('body', $post->body) }}</textarea>
-                @error('body') <span class="error-text">{{ $message }}</span> @enderror
-            </div>
         </div>
     </section>
 
-    <section class="product-form-section">
-        <div class="product-form-section-head">
-            <span class="product-form-step">۲</span>
+    <section class="product-form-section post-form-section">
+        <div class="product-form-section-head compact">
+            <div>
+                <h2>متن کامل</h2>
+                <p>برای تیتر، لیست، نقل‌قول و لینک از ابزارهای ادیتور استفاده کنید.</p>
+            </div>
+        </div>
+
+        <div class="post-rich-editor" data-quill-editor>
+            <div data-quill-surface data-placeholder="متن کامل مقاله یا خبر را وارد کنید"></div>
+            <textarea id="body" name="body" data-quill-input>{{ $editorBody }}</textarea>
+        </div>
+        @error('body') <span class="error-text">{{ $message }}</span> @enderror
+    </section>
+
+    <section class="product-form-section post-form-section">
+        <div class="product-form-section-head compact">
             <div>
                 <h2>تصویر شاخص</h2>
                 <p>تصویر شاخص برای فهرست پست‌ها و نمایش عمومی آینده استفاده می‌شود.</p>
@@ -95,9 +115,8 @@
         </div>
     </section>
 
-    <section class="product-form-section">
-        <div class="product-form-section-head">
-            <span class="product-form-step">۳</span>
+    <section class="product-form-section post-form-section">
+        <div class="product-form-section-head compact">
             <div>
                 <h2>انتشار و نمایش</h2>
                 <p>زمان انتشار، وضعیت نمایش و جایگاه پست را تنظیم کنید.</p>
@@ -138,9 +157,8 @@
         </div>
     </section>
 
-    <section class="product-form-section">
-        <div class="product-form-section-head">
-            <span class="product-form-step">۴</span>
+    <section class="product-form-section post-form-section">
+        <div class="product-form-section-head compact">
             <div>
                 <h2>سئو</h2>
                 <p>عنوان و توضیحات متا برای آماده‌سازی نمایش عمومی پست.</p>
@@ -201,5 +219,6 @@
                 });
             });
         });
+
     </script>
 @endpush

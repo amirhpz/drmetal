@@ -5,9 +5,10 @@
 @section('subtitle', 'نمای کلی محتوای عمومی سایت')
 
 @section('content')
-    <section class="panel-grid cols-7" style="margin-bottom: 18px;">
+    <section class="panel-grid cols-8" style="margin-bottom: 18px;">
         <x-panel.stat :value="$productCount" label="محصول" />
         <x-panel.stat :value="$postCount" label="پست" />
+        <x-panel.stat :value="$clientCount" label="مشتری" />
         <x-panel.stat :value="$categoryCount" label="دسته‌بندی" />
         <x-panel.stat :value="$serviceCount" label="خدمت" />
         <x-panel.stat :value="$panelUserCount" label="کاربر پنل" />
@@ -74,7 +75,7 @@
                     @forelse ($latestPosts as $post)
                         <tr>
                             <td>{{ $post->title }}</td>
-                            <td>{{ $post->category ?: 'بدون دسته‌بندی' }}</td>
+                            <td>{{ $post->postCategory?->title ?? ($post->category ?: 'بدون دسته‌بندی') }}</td>
                             <td>{{ $post->published_at ? \App\Support\PersianNumber::digits($post->published_at->format('Y-m-d')) : 'پیش‌نویس' }}</td>
                             <td>
                                 <x-panel.badge :variant="$post->is_active ? 'success' : 'muted'">

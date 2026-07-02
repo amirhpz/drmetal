@@ -1,25 +1,17 @@
-<x-layouts.app :meta-title="$metaTitle" :meta-description="$metaDescription">
+<x-layouts.app :meta-title="$metaTitle" :meta-description="$metaDescription" page-class="home-page">
     <section class="hero section">
         <div class="container hero-grid">
             <div class="hero-copy">
-                <p class="eyebrow">{{ $company['slogan_en'] }}</p>
-                <h1>{{ $company['name_fa'] }}</h1>
-                <p>{{ $company['slogan_fa'] }} در صنعت فلزات</p>
-                <p>{{ $company['hero_description'] }}</p>
-                <div class="hero-actions">
-                    <a class="btn btn-primary" href="{{ route('services.index') }}">مشاهده خدمات</a>
-                    <a class="btn btn-secondary" href="{{ route('contact.index') }}">تماس با ما</a>
-                    <a class="btn btn-link" href="{{ route('about') }}">درباره دکتر متال</a>
-                </div>
+                <p class="eyebrow">{{ $settings['company.tagline_en'] ?? $company['slogan_en'] }}</p>
+                <h1>{{ $settings['company.name'] ?? $company['name_fa'] }}</h1>
+                <p>{{ $settings['company.tagline'] ?? $company['slogan_fa'] }} در صنعت فلزات</p>
+                <p>{{ $settings['company.short_description'] ?? $company['hero_description'] }}</p>
                 <div class="trust-strip">
                     <span>دانش‌پایه</span>
                     <span>متالورژی صنعتی</span>
                     <span>آلومینیوم و فلزات رنگین</span>
                 </div>
             </div>
-            <figure class="hero-image-card" aria-label="نمای صنعتی صنایع متالورژی دکتر متال">
-                <img src="{{ asset('images/hero.png') }}" alt="صنایع متالورژی دکتر متال">
-            </figure>
         </div>
     </section>
 
@@ -27,7 +19,7 @@
         <div class="container">
             <div class="section-title-row">
                 <x-site.section-heading eyebrow="بازار فلزات" title="قیمت لحظه‌ای فلزات"
-                    description="نمایی سریع از آخرین داده‌های موجود برای تصمیم‌گیری خرید و برنامه‌ریزی تامین."/>
+                                        description="نمایی سریع از آخرین داده‌های موجود برای تصمیم‌گیری خرید و برنامه‌ریزی تامین."/>
                 <div class="price-section-actions">
                     <span>آخرین بروزرسانی: امروز</span>
                     <div class="swiper-controls" aria-label="کنترل اسلایدر قیمت فلزات">
@@ -40,11 +32,11 @@
                 @if ($loop->first)
                     <div class="price-swiper swiper" data-price-swiper>
                         <div class="price-grid swiper-wrapper">
-                @endif
+                            @endif
                             <div class="swiper-slide">
                                 <x-site.metal-price-card :price="$price"/>
                             </div>
-                @if ($loop->last)
+                            @if ($loop->last)
                         </div>
                     </div>
                     <div class="price-pagination" data-price-pagination aria-label="صفحه‌بندی قیمت فلزات"></div>
@@ -58,22 +50,30 @@
     <section class="section tight-section">
         <div class="container split-section">
             <div>
-                <p class="eyebrow">Dr Metal Metallurgical Industries</p>
+                <p class="eyebrow">{{ $settings['company.name_en'] ?? $company['name_en'] }}</p>
                 <h2>فعال در طراحی، تولید، بهینه‌سازی و تأمین محصولات فلزی</h2>
-                <p>{{ $company['intro'] }}</p>
+                <p>{{ $settings['about.story'] ?? $company['intro'] }}</p>
             </div>
-            <div class="factory-visual wide" aria-hidden="true"></div>
+            <div>
+                <img src="{{asset("images/home-1.png")}}">
+            </div>
         </div>
     </section>
 
-    <section class="section">
+    <section class="section activity-section">
         <div class="container">
-            <x-site.section-heading eyebrow="Fields of Activity" title="زمینه‌های فعالیت"
-                :description="$company['fields_description']" />
-            <div class="card-grid">
+            <div class="activity-section-head">
+                <x-site.section-heading eyebrow="Fields of Activity" title="زمینه‌های فعالیت"
+                                        :description="$company['fields_description']"/>
+                <a class="btn btn-secondary" href="{{ route('services.index') }}">جزئیات خدمات</a>
+            </div>
+            <div class="activity-grid">
                 @foreach ($company['fields'] as $field)
                     <article class="card activity-card">
-                        <span class="activity-number">{{ \App\Support\PersianNumber::digits($loop->iteration) }}</span>
+                        <div class="activity-card-head">
+                            <span class="activity-number">{{ \App\Support\PersianNumber::digits($loop->iteration) }}</span>
+                            <small>Dr Metal Field</small>
+                        </div>
                         <h3>{{ $field['title'] }}</h3>
                         <p>{{ $field['description'] }}</p>
                     </article>
@@ -100,15 +100,32 @@
 
     <section class="section tight-section">
         <div class="container">
-            <x-site.section-heading eyebrow="Top Clients" title="مشتریان برتر" />
-            <div class="client-grid">
-                @foreach ($company['clients'] as $client)
-                    <article class="client-card">
-                        <strong>{{ $client['name'] }}</strong>
-                        <span>{{ $client['en'] }}</span>
-                    </article>
-                @endforeach
+            <div class="section-title-row">
+                <x-site.section-heading eyebrow="Top Clients" title="مشتریان برتر"/>
+                <div class="swiper-controls" aria-label="کنترل اسلایدر مشتریان">
+                    <button class="swiper-button" type="button" data-client-prev aria-label="قبلی">›</button>
+                    <button class="swiper-button" type="button" data-client-next aria-label="بعدی">‹</button>
+                </div>
             </div>
+            <div class="client-swiper" data-client-swiper>
+                <div class="client-carousel-track">
+                    @foreach ($clients as $client)
+                        <div class="client-slide">
+                            <article class="client-card client-carousel-card">
+                                @if ($client->logo)
+                                    <img class="client-carousel-image" src="{{ asset($client->logo) }}"
+                                         alt="{{ $client->name }}" loading="lazy">
+                                @else
+                                    <span
+                                        class="client-carousel-image client-carousel-placeholder">{{ mb_substr($client->name, 0, 1) }}</span>
+                                @endif
+                                <strong>{{ $client->name }}</strong>
+                            </article>
+                        </div>
+                    @endforeach
+                </div>
+            </div>
+            <div class="client-pagination" data-client-pagination aria-label="صفحه‌بندی مشتریان"></div>
             <div class="center-action">
                 <a class="btn btn-secondary" href="{{ route('clients.index') }}">مشاهده مشتریان</a>
             </div>
@@ -120,7 +137,8 @@
             <div>
                 <p class="eyebrow">Certifications & Approvals</p>
                 <h2>گواهینامه‌ها و تأییدیه‌ها</h2>
-                <p>استانداردهای ISO، IMS و HSE به عنوان بخشی از اعتبار صنعتی مجموعه معرفی شده‌اند و قابل اصلاح در ساختار محتوایی سایت هستند.</p>
+                <p>استانداردهای ISO، IMS و HSE به عنوان بخشی از اعتبار صنعتی مجموعه معرفی شده‌اند و قابل اصلاح در ساختار
+                    محتوایی سایت هستند.</p>
             </div>
             <div class="cert-pill-row">
                 @foreach (['ISO', 'IMS', 'HSE'] as $cert)
@@ -134,7 +152,7 @@
     <section class="section tight-section">
         <div class="container">
             <x-site.section-heading eyebrow="محصولات" title="محصولات اصلی"
-                description="محصولات و قطعات فلزی مرتبط با آلومینیوم و فلزات رنگین."/>
+                                    description="محصولات و قطعات فلزی مرتبط با آلومینیوم و فلزات رنگین."/>
             <div class="product-strip">
                 @if ($featuredProducts->count() >= 4)
                     @foreach ($featuredProducts->take(4) as $product)
@@ -148,7 +166,8 @@
                         ['title' => 'فلزات رنگین', 'spec' => 'آلومینیوم و مس'],
                     ] as $fallback)
                         <article class="card product-card">
-                            <div class="visual-placeholder" aria-hidden="true"><span>{{ $fallback['spec'] }}</span></div>
+                            <div class="visual-placeholder" aria-hidden="true"><span>{{ $fallback['spec'] }}</span>
+                            </div>
                             <div class="card-body">
                                 <p class="eyebrow">محصول صنعتی</p>
                                 <h3>{{ $fallback['title'] }}</h3>
@@ -169,7 +188,6 @@
             <h2>برای شروع همکاری با صنایع متالورژی دکتر متال در ارتباط باشید.</h2>
             <div>
                 <a class="btn btn-primary" href="{{ route('contact.index') }}">تماس با ما</a>
-                <a class="btn btn-secondary" href="{{ route('services.index') }}">زمینه‌های فعالیت</a>
             </div>
         </div>
     </section>

@@ -1,3 +1,5 @@
+@props(['pageClass' => null])
+
 <!doctype html>
 <html lang="fa" dir="rtl">
 <head>
@@ -12,7 +14,7 @@
     <meta property="og:url" content="{{ url()->current() }}">
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
-<body>
+<body @class([$pageClass])>
     <div class="page-shell">
         <x-site.header />
 

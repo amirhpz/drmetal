@@ -28,6 +28,16 @@
                 </select>
             </div>
 
+            <div class="form-field">
+                <label for="post_category_id">دسته‌بندی</label>
+                <select id="post_category_id" name="post_category_id">
+                    <option value="">همه دسته‌بندی‌ها</option>
+                    @foreach ($categories as $category)
+                        <option value="{{ $category->id }}" @selected((string) $filters['post_category_id'] === (string) $category->id)>{{ $category->title }}</option>
+                    @endforeach
+                </select>
+            </div>
+
             <div class="form-field is-wide">
                 <div class="panel-actions">
                     <x-panel.button variant="primary" type="submit">اعمال فیلتر</x-panel.button>
@@ -65,7 +75,7 @@
                                 <strong>{{ $post->title }}</strong>
                                 <div class="panel-help" dir="ltr">{{ $post->slug }}</div>
                             </td>
-                            <td>{{ $post->category ?: 'بدون دسته‌بندی' }}</td>
+                            <td>{{ $post->postCategory?->title ?? ($post->category ?: 'بدون دسته‌بندی') }}</td>
                             <td>
                                 @if ($post->published_at)
                                     {{ \App\Support\PersianNumber::digits($post->published_at->format('Y-m-d H:i')) }}

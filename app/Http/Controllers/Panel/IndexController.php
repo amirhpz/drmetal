@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Panel;
 
 use App\Http\Controllers\Controller;
+use App\Models\Client;
 use App\Models\ContactMessage;
 use App\Models\Post;
 use App\Models\Product;
@@ -19,6 +20,7 @@ class IndexController extends Controller
         return view('panel.dashboard', [
             'productCount' => Product::query()->count(),
             'postCount' => Post::query()->count(),
+            'clientCount' => Client::query()->count(),
             'categoryCount' => ProductCategory::query()->count(),
             'serviceCount' => Service::query()->count(),
             'panelUserCount' => User::query()->where('is_panel_user', true)->count(),
@@ -30,6 +32,7 @@ class IndexController extends Controller
                 ->take(5)
                 ->get(),
             'latestPosts' => Post::query()
+                ->with('postCategory')
                 ->latest()
                 ->take(5)
                 ->get(),

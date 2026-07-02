@@ -1,25 +1,9 @@
 <x-layouts.app :meta-title="$metaTitle" :meta-description="$metaDescription">
-    <section class="inner-hero section">
-        <div class="container inner-hero-grid about-visual-hero">
-            <div>
-                <p class="eyebrow">{{ $company['name_en'] }}</p>
-                <h1>درباره {{ $company['name_fa'] }}</h1>
-                <p>{{ $company['slogan_fa'] }}؛ رویکردی دانش‌پایه در طراحی، تولید، بهینه‌سازی و تأمین محصولات فلزی.</p>
-                <div class="trust-strip">
-                    <span>نزدیک به یک دهه نام نیک</span>
-                    <span>تخصص متالورژی</span>
-                    <span>فلزات رنگین</span>
-                </div>
-            </div>
-            <div class="factory-visual industrial-visual" aria-hidden="true">
-                <div class="ingot-stack"><span></span><span></span><span></span></div>
-            </div>
-        </div>
-    </section>
+    <x-site.page-hero path="خانه / درباره ما" label="About Dr Metal" :title="'درباره '.$company['name_fa']" />
 
     <section class="section">
         <div class="container split-section">
-            <div class="factory-visual wide" aria-hidden="true"></div>
+            <img src="{{asset('/images/home-1.png')}}">
             <div>
                 <h2>معرفی شرکت</h2>
                 <p>{{ $settings['about.story'] ?? $company['intro'] }}</p>
@@ -59,12 +43,20 @@
         </div>
     </section>
 
-    <section class="section tight-section">
+    <section class="section activity-section">
         <div class="container">
-            <x-site.section-heading eyebrow="Fields of Activity" title="زمینه‌های فعالیت" />
-            <div class="card-grid">
+            <div class="activity-section-head">
+                <x-site.section-heading eyebrow="Fields of Activity" title="زمینه‌های فعالیت"
+                                        :description="$company['fields_description'] ?? null" />
+                <a class="btn btn-secondary" href="{{ route('services.index') }}">جزئیات خدمات</a>
+            </div>
+            <div class="activity-grid">
                 @foreach ($company['fields'] as $field)
                     <article class="card activity-card">
+                        <div class="activity-card-head">
+                            <span class="activity-number">{{ \App\Support\PersianNumber::digits($loop->iteration) }}</span>
+                            <small>Dr Metal Field</small>
+                        </div>
                         <h3>{{ $field['title'] }}</h3>
                         <p>{{ $field['description'] }}</p>
                     </article>
@@ -75,14 +67,33 @@
 
     <section class="section tight-section">
         <div class="container">
-            <x-site.section-heading eyebrow="Top Clients" title="بخشی از مشتریان برتر" />
-            <div class="client-grid">
-                @foreach ($company['clients'] as $client)
-                    <article class="client-card">
-                        <strong>{{ $client['name'] }}</strong>
-                        <span>{{ $client['en'] }}</span>
-                    </article>
-                @endforeach
+            <div class="section-title-row">
+                <x-site.section-heading eyebrow="Top Clients" title="بخشی از مشتریان برتر" />
+                <div class="swiper-controls" aria-label="کنترل اسلایدر مشتریان">
+                    <button class="swiper-button" type="button" data-client-prev aria-label="قبلی">›</button>
+                    <button class="swiper-button" type="button" data-client-next aria-label="بعدی">‹</button>
+                </div>
+            </div>
+            <div class="client-swiper" data-client-swiper>
+                <div class="client-carousel-track">
+                    @foreach ($clients as $client)
+                        <div class="client-slide">
+                            <article class="client-card client-carousel-card">
+                                @if ($client->logo)
+                                    <img class="client-carousel-image" src="{{ asset($client->logo) }}"
+                                         alt="{{ $client->name }}" loading="lazy">
+                                @else
+                                    <span class="client-carousel-image client-carousel-placeholder">{{ mb_substr($client->name, 0, 1) }}</span>
+                                @endif
+                                <strong>{{ $client->name }}</strong>
+                            </article>
+                        </div>
+                    @endforeach
+                </div>
+            </div>
+            <div class="client-pagination" data-client-pagination aria-label="صفحه‌بندی مشتریان"></div>
+            <div class="center-action">
+                <a class="btn btn-secondary" href="{{ route('clients.index') }}">مشاهده مشتریان</a>
             </div>
         </div>
     </section>

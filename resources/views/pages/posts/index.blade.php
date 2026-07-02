@@ -1,108 +1,113 @@
-<x-layouts.app :meta-title="$metaTitle" :meta-description="$metaDescription">
-    <section class="posts-hero">
-        <div class="container posts-hero-grid">
-            <div>
-                <p class="eyebrow">مقالات و اخبار دکتر متال</p>
-                <h1>دانش متالورژی، بازار فلزات و تجربه صنعتی در یک مسیر قابل مطالعه</h1>
-                <p>یادداشت‌ها و خبرهای دکتر متال درباره آلومینیوم، فلزات رنگین، تولید صنعتی، کیفیت و روندهای مهم بازار.</p>
-                <div class="hero-actions">
-                    <a class="btn btn-primary" href="#latest-posts">مشاهده مطالب</a>
-                    <a class="btn btn-secondary" href="{{ route('contact.index') }}">ارتباط با دکتر متال</a>
-                </div>
-            </div>
+<x-layouts.app :meta-title="$metaTitle" :meta-description="$metaDescription" page-class="articles-page">
+    <x-site.page-hero path="خانه / مقالات" label="Knowledge Center" title="مقالات و دانشنامه" />
 
-            <aside class="posts-hero-panel" aria-label="خلاصه بخش مقالات">
-                <span>Dr Metal Journal</span>
-                <strong>{{ $posts->total() ?: '۰' }}</strong>
-                <p>مطلب منتشر شده برای دسترسی سریع مشتریان صنعتی و مخاطبان تخصصی.</p>
+{{--    <section class="section articles-feature-section">--}}
+{{--        <div class="container">--}}
+{{--            <div class="articles-toolbar">--}}
+{{--                <div>--}}
+{{--                    <span>مقاله منتخب</span>--}}
+{{--                    <h2>شروع مطالعه از اینجا</h2>--}}
+{{--                </div>--}}
+
+{{--                <form class="articles-search" action="{{ route('posts.index') }}" method="get" role="search">--}}
+{{--                    @if ($selectedCategory)--}}
+{{--                        <input type="hidden" name="category" value="{{ $selectedCategory }}">--}}
+{{--                    @endif--}}
+{{--                    <label for="article-search">جستجو در مقالات</label>--}}
+{{--                    <div>--}}
+{{--                        <input id="article-search" name="q" value="{{ $search }}" placeholder="جستجو در مقالات...">--}}
+{{--                        <button class="btn btn-primary" type="submit">جستجو</button>--}}
+{{--                    </div>--}}
+{{--                </form>--}}
+{{--            </div>--}}
+
+{{--            @if ($featuredPost)--}}
+{{--                <article class="featured-article">--}}
+{{--                    <a class="featured-article-media" href="{{ route('posts.show', $featuredPost) }}" aria-label="مطالعه مقاله {{ $featuredPost->title }}">--}}
+{{--                        @if ($featuredPost->featured_image)--}}
+{{--                            <img src="{{ asset($featuredPost->featured_image) }}" alt="{{ $featuredPost->title }}" loading="lazy">--}}
+{{--                        @else--}}
+{{--                            <span>{{ $featuredPost->category ?: 'Dr Metal' }}</span>--}}
+{{--                        @endif--}}
+{{--                    </a>--}}
+
+{{--                    <div class="featured-article-content">--}}
+{{--                        <div class="article-meta">--}}
+{{--                            <span>{{ $featuredPost->category ?: 'مقاله' }}</span>--}}
+{{--                            @if ($featuredPost->published_at)--}}
+{{--                                <time datetime="{{ $featuredPost->published_at->toDateString() }}">{{ \App\Support\PersianDate::date($featuredPost->published_at->timezone('Asia/Tehran')) }}</time>--}}
+{{--                            @endif--}}
+{{--                            <span>{{ \App\Support\PersianNumber::digits(max(1, (int) ceil(mb_strlen(trim(strip_tags(($featuredPost->body ?: '').' '.$featuredPost->excerpt))) / 900))) }} دقیقه مطالعه</span>--}}
+{{--                        </div>--}}
+{{--                        <h2><a href="{{ route('posts.show', $featuredPost) }}">{{ $featuredPost->title }}</a></h2>--}}
+{{--                        <p>{{ $featuredPost->excerpt }}</p>--}}
+{{--                        <a class="btn btn-primary" href="{{ route('posts.show', $featuredPost) }}">مطالعه مقاله</a>--}}
+{{--                    </div>--}}
+{{--                </article>--}}
+{{--            @else--}}
+{{--                <div class="articles-empty">--}}
+{{--                    <strong>هنوز مقاله‌ای منتشر نشده است.</strong>--}}
+{{--                    <p>به‌زودی مطالب تخصصی این بخش اضافه خواهد شد.</p>--}}
+{{--                </div>--}}
+{{--            @endif--}}
+{{--        </div>--}}
+{{--    </section>--}}
+
+    <section class="section section-muted articles-list-section" id="articles-list">
+        <div class="container articles-layout">
+            <aside class="articles-filter-panel">
+                <strong>دسته‌بندی‌ها</strong>
+                <nav class="articles-category-nav" aria-label="دسته‌بندی مقالات">
+                    <a @class(['is-active' => $selectedCategory === '']) href="{{ route('posts.index', array_filter(['q' => $search])) }}">همه</a>
+                    @foreach ($categories as $category)
+                        <a @class(['is-active' => $selectedCategory === $category]) href="{{ route('posts.index', array_filter(['category' => $category, 'q' => $search])) }}">
+                            {{ $category }}
+                        </a>
+                    @endforeach
+                </nav>
+
+                @if ($selectedCategory || $search)
+                    <a class="articles-clear-filter" href="{{ route('posts.index') }}">حذف فیلترها</a>
+                @endif
             </aside>
-        </div>
-    </section>
 
-    @if ($featuredPosts->isNotEmpty())
-        <section class="section tight-section">
-            <div class="container">
-                <x-site.section-heading
-                    eyebrow="مطالب منتخب"
-                    title="خواندنی‌های پیشنهادی"
-                    description="مطالبی که برای شناخت بهتر فعالیت، تخصص و بازار هدف دکتر متال برجسته شده‌اند."
-                />
-
-                <div class="featured-post-grid">
-                    @foreach ($featuredPosts as $post)
-                        <article class="post-card post-card-featured">
-                            <a class="post-card-media" href="{{ route('posts.show', $post) }}" aria-label="{{ $post->title }}">
-                                @if ($post->featured_image)
-                                    <img src="{{ asset($post->featured_image) }}" alt="{{ $post->title }}">
-                                @else
-                                    <span>{{ $post->category ?: 'Dr Metal' }}</span>
-                                @endif
-                            </a>
-                            <div class="post-card-body">
-                                <div class="post-meta">
-                                    <span>{{ $post->category ?: 'مقاله' }}</span>
-                                    <time datetime="{{ $post->published_at?->toDateString() }}">{{ $post->published_at?->timezone('Asia/Tehran')->format('Y/m/d') }}</time>
-                                </div>
-                                <h2><a href="{{ route('posts.show', $post) }}">{{ $post->title }}</a></h2>
-                                <p>{{ $post->excerpt }}</p>
-                                <a class="post-read-link" href="{{ route('posts.show', $post) }}">ادامه مطلب</a>
-                            </div>
-                        </article>
-                    @endforeach
-                </div>
-            </div>
-        </section>
-    @endif
-
-    <section class="section section-muted" id="latest-posts">
-        <div class="container">
-            <div class="section-title-row">
-                <x-site.section-heading
-                    eyebrow="آخرین مطالب"
-                    title="مقالات و خبرها"
-                    description="همه مطالب منتشر شده به ترتیب اولویت و زمان انتشار نمایش داده می‌شوند."
-                />
-                <span>{{ $posts->total() }} مطلب</span>
-            </div>
-
-            @if ($posts->count() > 0)
-                <div class="post-grid">
-                    @foreach ($posts as $post)
-                        <article class="post-card">
-                            <a class="post-card-media" href="{{ route('posts.show', $post) }}" aria-label="{{ $post->title }}">
-                                @if ($post->featured_image)
-                                    <img src="{{ asset($post->featured_image) }}" alt="{{ $post->title }}">
-                                @else
-                                    <span>{{ $post->category ?: 'Dr Metal' }}</span>
-                                @endif
-                            </a>
-                            <div class="post-card-body">
-                                <div class="post-meta">
-                                    <span>{{ $post->category ?: 'مقاله' }}</span>
-                                    <time datetime="{{ $post->published_at?->toDateString() }}">{{ $post->published_at?->timezone('Asia/Tehran')->format('Y/m/d') }}</time>
-                                </div>
-                                <h2><a href="{{ route('posts.show', $post) }}">{{ $post->title }}</a></h2>
-                                <p>{{ $post->excerpt }}</p>
-                                <a class="post-read-link" href="{{ route('posts.show', $post) }}">ادامه مطلب</a>
-                            </div>
-                        </article>
-                    @endforeach
+            <div class="articles-main">
+                <div class="articles-list-head">
+                    <div>
+                        <span>آخرین مطالب</span>
+                        <h2>{{ $selectedCategory ?: 'همه مقالات' }}</h2>
+                    </div>
+                    <p>{{ \App\Support\PersianNumber::digits($posts->total()) }} مطلب</p>
                 </div>
 
-                <div class="pagination-wrap">{{ $posts->links() }}</div>
-            @else
-                <div class="empty-state">هنوز مطلبی منتشر نشده است.</div>
-            @endif
+                @if ($posts->count() > 0)
+                    <div class="article-grid">
+                        @foreach ($posts as $post)
+                            <x-site.article-card :post="$post" />
+                        @endforeach
+                    </div>
+
+                    <div class="pagination-wrap articles-pagination">{{ $posts->withQueryString()->links() }}</div>
+                @else
+                    <div class="articles-empty">
+                        <strong>هنوز مقاله‌ای منتشر نشده است.</strong>
+                        <p>به‌زودی مطالب تخصصی این بخش اضافه خواهد شد.</p>
+                    </div>
+                @endif
+            </div>
         </div>
     </section>
 
     <section class="section">
-        <div class="container final-cta">
+        <div class="container articles-bottom-cta">
             <div>
-                <p class="eyebrow">همکاری صنعتی</p>
-                <h2>برای دریافت مشاوره درباره تامین آلومینیوم و فلزات رنگین با ما در ارتباط باشید.</h2>
+                <p class="eyebrow">مشاوره تخصصی</p>
+                <h2>برای مشاوره تخصصی در زمینه محصولات آلومینیومی با ما در ارتباط باشید</h2>
             </div>
-            <a class="btn btn-primary" href="{{ route('contact.index') }}">تماس با ما</a>
+            <div>
+                <a class="btn btn-primary" href="{{ route('contact.index') }}">تماس با ما</a>
+                <a class="btn btn-secondary" href="{{ route('products.index') }}">مشاهده محصولات</a>
+            </div>
         </div>
     </section>
 </x-layouts.app>

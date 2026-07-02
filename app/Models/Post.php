@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Post extends Model
 {
@@ -14,6 +15,7 @@ class Post extends Model
         'body',
         'featured_image',
         'category',
+        'post_category_id',
         'author_name',
         'published_at',
         'is_featured',
@@ -36,6 +38,11 @@ class Post extends Model
     public function getRouteKeyName(): string
     {
         return 'slug';
+    }
+
+    public function postCategory(): BelongsTo
+    {
+        return $this->belongsTo(PostCategory::class);
     }
 
     public function scopeActive(Builder $query): Builder

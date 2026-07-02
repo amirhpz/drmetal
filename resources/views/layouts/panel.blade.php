@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>@yield('title', 'پنل مدیریت') | دکتر متال</title>
+    @vite(['resources/js/panel.js'])
     <style>
         :root {
             --panel-bg: #f4f6f8;
@@ -165,6 +166,7 @@
         .panel-grid.cols-5 { grid-template-columns: repeat(5, minmax(0, 1fr)); }
         .panel-grid.cols-6 { grid-template-columns: repeat(6, minmax(0, 1fr)); }
         .panel-grid.cols-7 { grid-template-columns: repeat(7, minmax(0, 1fr)); }
+        .panel-grid.cols-8 { grid-template-columns: repeat(8, minmax(0, 1fr)); }
         .stat-card {
             min-height: 104px;
             padding: 16px;
@@ -418,6 +420,48 @@
             color: var(--panel-muted);
             margin: 3px 0 0;
         }
+        .product-form-section-head.compact {
+            align-items: center;
+            margin-bottom: 14px;
+            padding-bottom: 12px;
+        }
+        .post-form {
+            max-width: 1120px;
+        }
+        .post-form-section {
+            box-shadow: none;
+        }
+        .post-rich-editor {
+            overflow: hidden;
+            background: #fff;
+            border: 1px solid var(--panel-border);
+            border-radius: var(--panel-radius);
+        }
+        .post-rich-editor .ql-toolbar {
+            background: var(--panel-surface-soft);
+            border: 0;
+            border-bottom: 1px solid var(--panel-border);
+            font-family: inherit;
+        }
+        .post-rich-editor .ql-container {
+            border: 0;
+            direction: rtl;
+            font-family: inherit;
+            font-size: 15px;
+        }
+        .post-rich-editor .ql-editor {
+            min-height: 340px;
+            padding: 18px;
+            outline: 0;
+            line-height: 2;
+            text-align: right;
+        }
+        .post-rich-editor .ql-container:focus-within {
+            box-shadow: inset 0 0 0 3px rgba(37, 99, 235, .08);
+        }
+        .post-rich-editor textarea {
+            display: none;
+        }
         .product-form-step {
             align-items: center;
             background: var(--panel-primary);
@@ -581,6 +625,7 @@
         @media (max-width: 1100px) {
             .panel-grid.cols-6 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
             .panel-grid.cols-7 { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+            .panel-grid.cols-8 { grid-template-columns: repeat(4, minmax(0, 1fr)); }
         }
         @media (max-width: 900px) {
             .panel-shell { grid-template-columns: 1fr; }
@@ -600,6 +645,7 @@
             .panel-grid.cols-5,
             .panel-grid.cols-6,
             .panel-grid.cols-7,
+            .panel-grid.cols-8,
             .form-grid,
             .upload-grid,
             .specs-grid,
@@ -643,6 +689,18 @@
                     <span class="panel-nav-icon">پس</span>
                     <span>پست‌ها</span>
                 </a>
+                <a href="{{ route('panel.post-categories.index') }}" @class(['is-active' => request()->routeIs('panel.post-categories.*')])>
+                    <span class="panel-nav-icon">دم</span>
+                    <span>دسته‌بندی مقالات</span>
+                </a>
+                <a href="{{ route('panel.clients.index') }}" @class(['is-active' => request()->routeIs('panel.clients.*')])>
+                    <span class="panel-nav-icon">مش</span>
+                    <span>مشتریان</span>
+                </a>
+                <a href="{{ route('panel.quote-requests.index') }}" @class(['is-active' => request()->routeIs('panel.quote-requests.*')])>
+                    <span class="panel-nav-icon">قـ</span>
+                    <span>درخواست‌های قیمت</span>
+                </a>
                 <a href="{{ route('panel.product-categories.index') }}" @class(['is-active' => request()->routeIs('panel.product-categories.*')])>
                     <span class="panel-nav-icon">دس</span>
                     <span>دسته‌بندی محصولات</span>
@@ -650,6 +708,10 @@
                 <a href="{{ route('panel.products.index') }}" @class(['is-active' => request()->routeIs('panel.products.*')])>
                     <span class="panel-nav-icon">مح</span>
                     <span>محصولات</span>
+                </a>
+                <a href="{{ route('panel.settings.edit') }}" @class(['is-active' => request()->routeIs('panel.settings.*')])>
+                    <span class="panel-nav-icon">تن</span>
+                    <span>تنظیمات سایت</span>
                 </a>
                 <a href="{{ route('home') }}" target="_blank">
                     <span class="panel-nav-icon">سا</span>

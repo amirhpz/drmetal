@@ -1,47 +1,5 @@
 <x-layouts.app :meta-title="$metaTitle" :meta-description="$metaDescription">
-    <section class="services-hero">
-        <div class="container services-hero-grid">
-            <div class="services-hero-copy">
-                <p class="eyebrow">Fields of Activity</p>
-                <h1>زمینه‌های فعالیت</h1>
-                <p>{{ $company['fields_description'] }}</p>
-                <div class="hero-actions">
-                    <a class="btn btn-primary" href="{{ route('contact.index') }}">تماس با ما</a>
-                    <a class="btn btn-secondary" href="{{ route('products.index') }}">مشاهده محصولات</a>
-                </div>
-                <div class="services-hero-metrics" aria-label="شاخص‌های فعالیت">
-                    <div>
-                        <strong>۴</strong>
-                        <span>زمینه اصلی فعالیت</span>
-                    </div>
-                    <div>
-                        <strong>۱۰</strong>
-                        <span>سال تجربه صنعتی</span>
-                    </div>
-                    <div>
-                        <strong>R&D</strong>
-                        <span>رویکرد دانش‌پایه</span>
-                    </div>
-                </div>
-            </div>
-
-            <aside class="services-hero-panel" aria-label="نمای متالورژی">
-                <div class="services-panel-head">
-                    <span>METALLURGY SYSTEM</span>
-                    <strong>{{ $company['slogan_en'] }}</strong>
-                </div>
-                <div class="services-production-card">
-                    <div class="services-ingot-scene" aria-hidden="true">
-                        <span></span><span></span><span></span><span></span>
-                    </div>
-                    <div>
-                        <strong>طراحی تا تأمین</strong>
-                        <p>مسیر فعالیت دکتر متال از دانش فنی تا تولید و تأمین صنعتی را پوشش می‌دهد.</p>
-                    </div>
-                </div>
-            </aside>
-        </div>
-    </section>
+    <x-site.page-hero path="خانه / زمینه‌های فعالیت" label="Fields of Activity" title="زمینه‌های فعالیت" />
 
     <section class="section services-cards-section">
         <div class="container">

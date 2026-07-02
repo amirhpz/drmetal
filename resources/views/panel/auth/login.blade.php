@@ -11,7 +11,7 @@
             background: #f6f7f9;
             color: #111827;
             display: flex;
-            font-family: "Vazirmatn", "IRANSansX", "Yekan Bakh", Tahoma, Arial, sans-serif;
+            font-family: "Yekan Bakh", "Vazirmatn", "IRANSansX", Tahoma, Arial, sans-serif;
             justify-content: center;
             line-height: 1.8;
             margin: 0;

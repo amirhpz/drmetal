@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\Post;
+use App\Models\PostCategory;
 use Illuminate\Database\Seeder;
 
 class PostSeeder extends Seeder
@@ -44,10 +45,13 @@ class PostSeeder extends Seeder
             ],
         ];
 
+        $categoryIds = PostCategory::query()->pluck('id', 'title');
+
         foreach ($posts as $post) {
             Post::query()->updateOrCreate(
                 ['slug' => $post['slug']],
                 $post + [
+                    'post_category_id' => $categoryIds->get($post['category']),
                     'author_name' => 'تیم دکتر متال',
                     'published_at' => now(),
                     'is_featured' => true,

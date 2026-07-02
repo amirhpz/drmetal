@@ -18,18 +18,11 @@
                 <a class="detail-back-link" href="{{ route('products.index') }}">بازگشت به محصولات</a>
                 <p class="eyebrow">{{ $product->category?->title ?? 'محصول صنعتی' }}</p>
                 <h1>{{ $product->title }}</h1>
-                <p>{{ $product->short_description }}</p>
                 <div class="product-detail-actions">
-                    <a class="btn btn-primary" href="{{ route('contact.index') }}#quote">درخواست قیمت این محصول</a>
-                    <a class="btn btn-secondary" href="{{ route('contact.index') }}">مشاوره فنی</a>
+                    <button class="btn btn-primary" type="button" data-quote-modal-open>درخواست قیمت</button>
+                    <a class="btn btn-secondary" href="{{ route('contact.index') }}">مشاوره فروش</a>
                 </div>
             </div>
-
-            <aside class="product-quote-panel">
-                <span>آماده برای بررسی سفارش</span>
-                <strong>{{ $product->grade ?: $product->purity ?: 'مشخصات قابل هماهنگی' }}</strong>
-                <p>برای دریافت قیمت دقیق، مقدار مورد نیاز، مقصد تحویل و زمان‌بندی خرید را ارسال کنید.</p>
-            </aside>
         </div>
     </section>
 
@@ -37,7 +30,8 @@
         <div class="container product-detail-layout">
             <div class="product-visual-panel">
                 @if ($product->featured_image)
-                    <img class="product-detail-image" src="{{ asset($product->featured_image) }}" alt="{{ $product->title }}">
+                    <img class="product-detail-image" src="{{ asset($product->featured_image) }}"
+                         alt="{{ $product->title }}">
                 @else
                     <div class="product-detail-visual" aria-hidden="true">
                         <span>{{ $product->category?->title ?? 'ALUMINIUM' }}</span>
@@ -123,13 +117,79 @@
     @if ($relatedProducts->isNotEmpty())
         <section class="section section-muted">
             <div class="container">
-                <x-site.section-heading title="محصولات مرتبط" />
+                <x-site.section-heading title="محصولات مرتبط"/>
                 <div class="card-grid">
                     @foreach ($relatedProducts as $relatedProduct)
-                        <x-site.product-card :product="$relatedProduct" />
+                        <x-site.product-card :product="$relatedProduct"/>
                     @endforeach
                 </div>
             </div>
         </section>
     @endif
+
+    <div class="quote-modal" data-quote-modal aria-hidden="true">
+        <div class="quote-modal-backdrop" data-quote-modal-close></div>
+        <section class="quote-modal-panel" role="dialog" aria-modal="true" aria-labelledby="quote-modal-title">
+            <button class="quote-modal-close" type="button" data-quote-modal-close aria-label="بستن">×</button>
+            <div class="quote-modal-head">
+                <span>درخواست قیمت</span>
+                <h2 id="quote-modal-title">{{ $product->title }}</h2>
+                <p>اطلاعات تماس و مقدار مورد نیاز را ثبت کنید تا واحد فروش شرایط تأمین و قیمت را اعلام کند.</p>
+            </div>
+
+            <form class="quote-modal-form" method="post" action="{{ route('quote.store') }}" data-quote-form>
+                @csrf
+                <input type="text" name="website" value="" tabindex="-1" autocomplete="off" class="honeypot">
+                <input type="hidden" name="product_id" value="{{ $product->id }}">
+
+                <label>
+                    <span>محصول</span>
+                    <input value="{{ $product->title }}" readonly>
+                </label>
+
+                <label>
+                    <span>نام رابط</span>
+                    <input name="contact_person" required autocomplete="name" placeholder="نام و نام خانوادگی">
+                    <small class="field-error" data-error-for="contact_person"></small>
+                </label>
+
+                <label>
+                    <span>شماره تماس</span>
+                    <input name="phone" required inputmode="tel" autocomplete="tel" placeholder="مثلا ۰۹۱۲...">
+                    <small class="field-error" data-error-for="phone"></small>
+                </label>
+
+                <label>
+                    <span>نام شرکت</span>
+                    <input name="company_name" autocomplete="organization" placeholder="اختیاری">
+                    <small class="field-error" data-error-for="company_name"></small>
+                </label>
+
+                <label>
+                    <span>ایمیل</span>
+                    <input type="email" name="email" autocomplete="email" placeholder="اختیاری">
+                    <small class="field-error" data-error-for="email"></small>
+                </label>
+
+                <label>
+                    <span>مقدار مورد نیاز</span>
+                    <input name="quantity" placeholder="مثلا ۵ تن یا ۱۰۰۰ کیلوگرم">
+                    <small class="field-error" data-error-for="quantity"></small>
+                </label>
+
+                <label class="is-wide">
+                    <span>توضیحات</span>
+                    <textarea name="message" rows="4" placeholder="گرید، زمان تحویل، مقصد یا توضیحات تکمیلی"></textarea>
+                    <small class="field-error" data-error-for="message"></small>
+                </label>
+
+                <div class="quote-modal-actions">
+                    <button class="btn btn-primary" type="submit">ثبت درخواست قیمت</button>
+                    <button class="btn btn-secondary" type="button" data-quote-modal-close>انصراف</button>
+                </div>
+            </form>
+        </section>
+    </div>
+
+    <div class="site-toast" data-site-toast role="status" aria-live="polite"></div>
 </x-layouts.app>
