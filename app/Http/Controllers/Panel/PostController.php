@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Panel;
 use App\Http\Controllers\Controller;
 use App\Models\Post;
 use App\Models\PostCategory;
+use App\Support\SafeHtml;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
@@ -255,15 +256,6 @@ class PostController extends Controller
 
     private function cleanPostBody(?string $body): ?string
     {
-        if (blank($body)) {
-            return null;
-        }
-
-        $allowedTags = '<p><br><strong><b><em><i><u><h2><h3><ul><ol><li><blockquote><a>';
-        $cleanBody = strip_tags($body, $allowedTags);
-        $cleanBody = preg_replace('/\s+on[a-z]+\s*=\s*(".*?"|\'.*?\'|[^\s>]+)/iu', '', $cleanBody) ?? $cleanBody;
-        $cleanBody = preg_replace('/\s(href)\s*=\s*([\'"])\s*(?!https?:|mailto:|tel:|\/|#).*?\2/iu', '', $cleanBody) ?? $cleanBody;
-
-        return trim($cleanBody);
+        return SafeHtml::cleanArticle($body);
     }
 }

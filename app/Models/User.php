@@ -56,4 +56,34 @@ class User extends Authenticatable
 
         return (bool) $role?->is_active && $role->hasPermission($permission);
     }
+
+    public function firstPanelRoute(): string
+    {
+        foreach ($this->panelRoutePermissions() as $permission => $route) {
+            if ($this->hasPanelPermission($permission)) {
+                return route($route);
+            }
+        }
+
+        return route('home');
+    }
+
+    /**
+     * @return array<string, string>
+     */
+    private function panelRoutePermissions(): array
+    {
+        return [
+            'dashboard.view' => 'panel.dashboard',
+            'users.manage' => 'panel.users.index',
+            'roles.manage' => 'panel.roles.index',
+            'posts.manage' => 'panel.posts.index',
+            'post_categories.manage' => 'panel.post-categories.index',
+            'clients.manage' => 'panel.clients.index',
+            'quote_requests.manage' => 'panel.quote-requests.index',
+            'product_categories.manage' => 'panel.product-categories.index',
+            'products.manage' => 'panel.products.index',
+            'settings.manage' => 'panel.settings.edit',
+        ];
+    }
 }

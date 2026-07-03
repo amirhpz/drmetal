@@ -14,7 +14,16 @@ class QuoteRequestController extends Controller
 {
     public function store(QuoteRequestStoreRequest $request): RedirectResponse|JsonResponse
     {
-        $quoteRequest = QuoteRequest::query()->create($request->safe()->except('website') + [
+        $quoteRequest = QuoteRequest::query()->create($request->safe()->only([
+            'product_id',
+            'company_name',
+            'contact_person',
+            'phone',
+            'email',
+            'quantity',
+            'message',
+        ]) + [
+            'status' => 'new',
             'ip_address' => $request->ip(),
             'user_agent' => (string) $request->userAgent(),
         ]);
@@ -27,7 +36,6 @@ class QuoteRequestController extends Controller
         if ($request->expectsJson()) {
             return response()->json([
                 'message' => $message,
-                'quote_request_id' => $quoteRequest->id,
             ]);
         }
 

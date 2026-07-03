@@ -696,7 +696,7 @@
 <body>
     <div class="panel-shell">
         <aside class="panel-sidebar">
-            <a class="panel-brand" href="{{ route('panel.dashboard') }}">
+            <a class="panel-brand" href="{{ auth()->user()?->firstPanelRoute() ?? route('home') }}">
                 <span class="panel-brand-mark">DM</span>
                 <span>
                     <strong>پنل دکتر متال</strong>
@@ -705,10 +705,12 @@
             </a>
 
             <nav class="panel-nav" aria-label="ناوبری پنل">
-                <a href="{{ route('panel.dashboard') }}" @class(['is-active' => request()->routeIs('panel.dashboard')])>
-                    <span class="panel-nav-icon">دا</span>
-                    <span>داشبورد</span>
-                </a>
+                @if (auth()->user()?->hasPanelPermission('dashboard.view'))
+                    <a href="{{ route('panel.dashboard') }}" @class(['is-active' => request()->routeIs('panel.dashboard')])>
+                        <span class="panel-nav-icon">دا</span>
+                        <span>داشبورد</span>
+                    </a>
+                @endif
                 @if (auth()->user()?->hasPanelPermission('users.manage'))
                     <a href="{{ route('panel.users.index') }}" @class(['is-active' => request()->routeIs('panel.users.*')])>
                         <span class="panel-nav-icon">کا</span>

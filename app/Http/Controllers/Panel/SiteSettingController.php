@@ -38,7 +38,7 @@ class SiteSettingController extends Controller
         $definitions = $this->definitions();
         $request->validate([
             'settings' => ['nullable', 'array'],
-            'settings.*' => ['nullable', 'string'],
+            'settings.*' => ['nullable', 'string', 'max:5000'],
         ]);
 
         $settings = $request->input('settings', []);

@@ -25,7 +25,14 @@ class ContactPageController extends Controller
 
     public function store(ContactMessageRequest $request): RedirectResponse
     {
-        $contactMessage = ContactMessage::query()->create($request->safe()->except('website') + [
+        $contactMessage = ContactMessage::query()->create($request->safe()->only([
+            'full_name',
+            'phone',
+            'email',
+            'subject',
+            'message',
+        ]) + [
+            'status' => 'new',
             'ip_address' => $request->ip(),
             'user_agent' => (string) $request->userAgent(),
         ]);

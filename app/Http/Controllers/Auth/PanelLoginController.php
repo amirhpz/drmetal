@@ -44,7 +44,7 @@ class PanelLoginController extends Controller
                 ->onlyInput('email');
         }
 
-        return redirect()->intended(route('panel.dashboard'));
+        return redirect()->intended($request->user()->firstPanelRoute());
     }
 
     public function destroy(Request $request): RedirectResponse

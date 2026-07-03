@@ -20,6 +20,7 @@ use App\Http\Controllers\Panel\UserController as PanelUserController;
 use App\Http\Controllers\ProductPageController;
 use App\Http\Controllers\PublicStorageController;
 use App\Http\Controllers\QuoteRequestController;
+use App\Http\Controllers\RobotsController;
 use App\Http\Controllers\ServicePageController;
 use App\Http\Controllers\SitemapController;
 use Illuminate\Support\Facades\Route;
@@ -39,21 +40,21 @@ Route::get('/contact-us', [ContactPageController::class, 'index'])->name('contac
 Route::post('/contact-us', [ContactPageController::class, 'store'])->middleware('throttle:contact-form')->name('contact.store');
 Route::post('/quote-request', [QuoteRequestController::class, 'store'])->middleware('throttle:quote-form')->name('quote.store');
 Route::get('/sitemap.xml', SitemapController::class)->name('sitemap');
-Route::get('/robots.txt', fn () => response("User-agent: *\nAllow: /\nSitemap: ".route('sitemap')."\n", 200, ['Content-Type' => 'text/plain']));
+Route::get('/robots.txt', RobotsController::class);
 Route::get('/storage/{path}', PublicStorageController::class)
     ->where('path', '.*')
     ->name('storage.public');
 
 Route::middleware('guest')->group(function (): void {
     Route::get('/panel/login', [PanelLoginController::class, 'create'])->name('panel.login');
-    Route::post('/panel/login', [PanelLoginController::class, 'store'])->name('panel.login.store');
+    Route::post('/panel/login', [PanelLoginController::class, 'store'])->middleware('throttle:panel-login')->name('panel.login.store');
 });
 
 Route::middleware(['auth', 'panel'])
     ->prefix('panel')
     ->name('panel.')
     ->group(function (): void {
-        Route::get('/', [PanelIndexController::class, 'index'])->name('dashboard');
+        Route::get('/', [PanelIndexController::class, 'index'])->middleware('panel.permission:dashboard.view')->name('dashboard');
         Route::post('/logout', [PanelLoginController::class, 'destroy'])->name('logout');
         Route::resource('users', PanelUserController::class)->except('show')->middleware('panel.permission:users.manage');
         Route::resource('roles', PanelRoleController::class)->except('show')->middleware('panel.permission:roles.manage');

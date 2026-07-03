@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Post;
+use App\Support\SafeHtml;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
 
@@ -180,11 +181,6 @@ class PostPageController extends Controller
 
     private function cleanArticleHtml(string $content): string
     {
-        $allowedTags = '<p><br><strong><b><em><i><u><h2><h3><ul><ol><li><blockquote><a>';
-        $content = strip_tags($content, $allowedTags);
-        $content = preg_replace('/\s+on[a-z]+\s*=\s*(".*?"|\'.*?\'|[^\s>]+)/iu', '', $content) ?? $content;
-        $content = preg_replace('/\s(href)\s*=\s*([\'"])\s*(?!https?:|mailto:|tel:|\/|#).*?\2/iu', '', $content) ?? $content;
-
-        return trim($content);
+        return SafeHtml::cleanArticle($content) ?? '';
     }
 }
