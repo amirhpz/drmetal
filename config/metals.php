@@ -8,7 +8,7 @@ return [
     'stale_after_hours' => env('METAL_PRICE_STALE_AFTER_HOURS', 24),
     'homepage_symbols' => ['XAUUSD', 'IR_GOLD_18K', 'XAGUSD', 'Cu', 'Al', 'USD', 'EUR'],
     'display_names' => [
-        'XAUUSD' => 'طلا',
+        'XAUUSD' => 'انس طلا',
         'IR_GOLD_18K' => 'طلای ۱۸ عیار',
         'XAGUSD' => 'نقره',
         'Cu'     => 'مس',

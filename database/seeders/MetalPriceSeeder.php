@@ -14,7 +14,7 @@ class MetalPriceSeeder extends Seeder
             ->update(['is_active' => false]);
 
         $prices = [
-            ['name' => 'طلا', 'symbol' => 'XAUUSD', 'price' => 3395.52, 'unit' => 'دلار', 'currency' => 'USD', 'change_percent' => -0.08, 'direction' => 'down', 'sort_order' => 1],
+            ['name' => 'انس طلا', 'symbol' => 'XAUUSD', 'price' => 3395.52, 'unit' => 'دلار', 'currency' => 'USD', 'change_percent' => -0.08, 'direction' => 'down', 'sort_order' => 1],
             ['name' => 'طلای ۱۸ عیار', 'symbol' => 'IR_GOLD_18K', 'price' => 17462700, 'unit' => 'تومان', 'currency' => 'IRT', 'change_percent' => 1.19, 'direction' => 'up', 'sort_order' => 2],
             ['name' => 'نقره', 'symbol' => 'XAGUSD', 'price' => 36.82, 'unit' => 'دلار', 'currency' => 'USD', 'change_percent' => 0.00, 'direction' => 'neutral', 'sort_order' => 3],
             ['name' => 'مس', 'symbol' => 'Cu', 'price' => 9890.00, 'unit' => 'دلار', 'currency' => 'USD', 'change_percent' => 0.00, 'direction' => 'neutral', 'sort_order' => 4],

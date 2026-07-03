@@ -24,6 +24,7 @@ class ExternalMetalPriceProvider implements MetalPriceProvider
         return $items
             ->map(fn (array $item): MetalPrice => $this->toMetalPrice($item))
             ->filter(fn (MetalPrice $price): bool => filled($price->symbol))
+            ->unique('symbol')
             ->sortBy('sort_order')
             ->values();
     }
