@@ -52,7 +52,8 @@ class ExternalMetalPriceProvider implements MetalPriceProvider
             return collect();
         }
 
-        return collect($response['currency'] ?? [])
+        return collect($response['gold'] ?? [])
+            ->merge(collect($response['currency'] ?? []))
             ->whereIn('symbol', config('metals.homepage_symbols', []))
             ->values();
     }
