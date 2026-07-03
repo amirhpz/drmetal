@@ -620,6 +620,33 @@
             color: var(--panel-muted);
             margin-top: 2px;
         }
+        .permission-grid {
+            display: grid;
+            gap: 10px;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+        .permission-card {
+            align-items: flex-start;
+            background: var(--panel-surface-soft);
+            border: 1px solid var(--panel-border);
+            border-radius: var(--panel-radius);
+            cursor: pointer;
+            display: flex;
+            gap: 10px;
+            padding: 13px;
+        }
+        .permission-card input {
+            margin-top: 6px;
+            width: auto;
+        }
+        .permission-card strong,
+        .permission-card small {
+            display: block;
+        }
+        .permission-card small {
+            color: var(--panel-muted);
+            margin-top: 2px;
+        }
         .pagination { margin-top: 16px; }
 
         @media (max-width: 1100px) {
@@ -649,7 +676,8 @@
             .form-grid,
             .upload-grid,
             .specs-grid,
-            .publish-options {
+            .publish-options,
+            .permission-grid {
                 grid-template-columns: 1fr;
             }
         }
@@ -681,38 +709,60 @@
                     <span class="panel-nav-icon">دا</span>
                     <span>داشبورد</span>
                 </a>
-                <a href="{{ route('panel.users.index') }}" @class(['is-active' => request()->routeIs('panel.users.*')])>
-                    <span class="panel-nav-icon">کا</span>
-                    <span>کاربران پنل</span>
-                </a>
-                <a href="{{ route('panel.posts.index') }}" @class(['is-active' => request()->routeIs('panel.posts.*')])>
-                    <span class="panel-nav-icon">پس</span>
-                    <span>پست‌ها</span>
-                </a>
-                <a href="{{ route('panel.post-categories.index') }}" @class(['is-active' => request()->routeIs('panel.post-categories.*')])>
-                    <span class="panel-nav-icon">دم</span>
-                    <span>دسته‌بندی مقالات</span>
-                </a>
-                <a href="{{ route('panel.clients.index') }}" @class(['is-active' => request()->routeIs('panel.clients.*')])>
-                    <span class="panel-nav-icon">مش</span>
-                    <span>مشتریان</span>
-                </a>
-                <a href="{{ route('panel.quote-requests.index') }}" @class(['is-active' => request()->routeIs('panel.quote-requests.*')])>
-                    <span class="panel-nav-icon">قـ</span>
-                    <span>درخواست‌های قیمت</span>
-                </a>
-                <a href="{{ route('panel.product-categories.index') }}" @class(['is-active' => request()->routeIs('panel.product-categories.*')])>
-                    <span class="panel-nav-icon">دس</span>
-                    <span>دسته‌بندی محصولات</span>
-                </a>
-                <a href="{{ route('panel.products.index') }}" @class(['is-active' => request()->routeIs('panel.products.*')])>
-                    <span class="panel-nav-icon">مح</span>
-                    <span>محصولات</span>
-                </a>
-                <a href="{{ route('panel.settings.edit') }}" @class(['is-active' => request()->routeIs('panel.settings.*')])>
-                    <span class="panel-nav-icon">تن</span>
-                    <span>تنظیمات سایت</span>
-                </a>
+                @if (auth()->user()?->hasPanelPermission('users.manage'))
+                    <a href="{{ route('panel.users.index') }}" @class(['is-active' => request()->routeIs('panel.users.*')])>
+                        <span class="panel-nav-icon">کا</span>
+                        <span>کاربران پنل</span>
+                    </a>
+                @endif
+                @if (auth()->user()?->hasPanelPermission('roles.manage'))
+                    <a href="{{ route('panel.roles.index') }}" @class(['is-active' => request()->routeIs('panel.roles.*')])>
+                        <span class="panel-nav-icon">سط</span>
+                        <span>سطوح دسترسی</span>
+                    </a>
+                @endif
+                @if (auth()->user()?->hasPanelPermission('posts.manage'))
+                    <a href="{{ route('panel.posts.index') }}" @class(['is-active' => request()->routeIs('panel.posts.*')])>
+                        <span class="panel-nav-icon">پس</span>
+                        <span>پست‌ها</span>
+                    </a>
+                @endif
+                @if (auth()->user()?->hasPanelPermission('post_categories.manage'))
+                    <a href="{{ route('panel.post-categories.index') }}" @class(['is-active' => request()->routeIs('panel.post-categories.*')])>
+                        <span class="panel-nav-icon">دم</span>
+                        <span>دسته‌بندی مقالات</span>
+                    </a>
+                @endif
+                @if (auth()->user()?->hasPanelPermission('clients.manage'))
+                    <a href="{{ route('panel.clients.index') }}" @class(['is-active' => request()->routeIs('panel.clients.*')])>
+                        <span class="panel-nav-icon">مش</span>
+                        <span>مشتریان</span>
+                    </a>
+                @endif
+                @if (auth()->user()?->hasPanelPermission('quote_requests.manage'))
+                    <a href="{{ route('panel.quote-requests.index') }}" @class(['is-active' => request()->routeIs('panel.quote-requests.*')])>
+                        <span class="panel-nav-icon">قـ</span>
+                        <span>درخواست‌های قیمت</span>
+                    </a>
+                @endif
+                @if (auth()->user()?->hasPanelPermission('product_categories.manage'))
+                    <a href="{{ route('panel.product-categories.index') }}" @class(['is-active' => request()->routeIs('panel.product-categories.*')])>
+                        <span class="panel-nav-icon">دس</span>
+                        <span>دسته‌بندی محصولات</span>
+                    </a>
+                @endif
+                @if (auth()->user()?->hasPanelPermission('products.manage'))
+                    <a href="{{ route('panel.products.index') }}" @class(['is-active' => request()->routeIs('panel.products.*')])>
+                        <span class="panel-nav-icon">مح</span>
+                        <span>محصولات</span>
+                    </a>
+                @endif
+                @if (auth()->user()?->hasPanelPermission('settings.manage'))
+                    <a href="{{ route('panel.settings.edit') }}" @class(['is-active' => request()->routeIs('panel.settings.*')])>
+                        <span class="panel-nav-icon">تن</span>
+                        <span>تنظیمات سایت</span>
+                    </a>
+                @endif
                 <a href="{{ route('home') }}" target="_blank">
                     <span class="panel-nav-icon">سا</span>
                     <span>مشاهده سایت</span>

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Panel;
 
 use App\Http\Controllers\Controller;
+use App\Models\PanelRole;
 use App\Models\User;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -14,6 +15,7 @@ class UserController extends Controller
     public function index(Request $request): View
     {
         $users = User::query()
+            ->with('panelRole')
             ->when($request->filled('q'), function ($query) use ($request): void {
                 $search = $request->string('q')->toString();
 
@@ -43,6 +45,7 @@ class UserController extends Controller
     {
         return view('panel.users.create', [
             'user' => new User(['is_panel_user' => true]),
+            'roles' => $this->roles(),
         ]);
     }
 
@@ -59,6 +62,7 @@ class UserController extends Controller
     {
         return view('panel.users.edit', [
             'user' => $user,
+            'roles' => $this->roles(),
         ]);
     }
 
@@ -111,6 +115,7 @@ class UserController extends Controller
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'email', 'max:255', Rule::unique('users', 'email')->ignore($user)],
             'password' => [$user ? 'nullable' : 'required', 'string', 'min:8', 'max:255', 'confirmed'],
+            'panel_role_id' => ['nullable', 'integer', 'exists:panel_roles,id'],
         ];
 
         $data = $request->validate($rules, [
@@ -121,6 +126,7 @@ class UserController extends Controller
             'password.required' => 'رمز عبور را وارد کنید.',
             'password.min' => 'رمز عبور باید حداقل ۸ کاراکتر باشد.',
             'password.confirmed' => 'تکرار رمز عبور با رمز عبور یکسان نیست.',
+            'panel_role_id.exists' => 'سطح دسترسی انتخاب‌شده معتبر نیست.',
         ]);
 
         if (blank($data['password'] ?? null)) {
@@ -128,6 +134,9 @@ class UserController extends Controller
         }
 
         $data['is_panel_user'] = $request->boolean('is_panel_user');
+        $data['panel_role_id'] = $data['is_panel_user'] && filled($data['panel_role_id'] ?? null)
+            ? $data['panel_role_id']
+            : null;
 
         return $data;
     }
@@ -158,5 +167,10 @@ class UserController extends Controller
             ->where('is_panel_user', true)
             ->whereKeyNot($user->getKey())
             ->count();
+    }
+
+    private function roles()
+    {
+        return PanelRole::query()->active()->ordered()->get();
     }
 }

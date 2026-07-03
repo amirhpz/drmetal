@@ -23,6 +23,7 @@ class DatabaseSeeder extends Seeder
             PostCategorySeeder::class,
             PostSeeder::class,
             ClientSeeder::class,
+            PanelRoleSeeder::class,
             PanelUserSeeder::class,
         ]);
     }

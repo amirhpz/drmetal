@@ -46,6 +46,7 @@
                         <th>نام</th>
                         <th>ایمیل</th>
                         <th>دسترسی پنل</th>
+                        <th>سطح دسترسی</th>
                         <th>تاریخ ایجاد</th>
                         <th>عملیات</th>
                     </tr>
@@ -65,6 +66,7 @@
                                     {{ $user->is_panel_user ? 'دارد' : 'ندارد' }}
                                 </x-panel.badge>
                             </td>
+                            <td>{{ $user->panelRole?->name ?? ($user->is_panel_user ? 'دسترسی کامل' : 'ندارد') }}</td>
                             <td>{{ $user->created_at?->format('Y-m-d') }}</td>
                             <td>
                                 <div class="panel-actions">
@@ -79,7 +81,7 @@
                         </tr>
                     @empty
                         <tr>
-                            <td colspan="5">کاربری با این فیلتر پیدا نشد.</td>
+                            <td colspan="6">کاربری با این فیلتر پیدا نشد.</td>
                         </tr>
                     @endforelse
                 </tbody>

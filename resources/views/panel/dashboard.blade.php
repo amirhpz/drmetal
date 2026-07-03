@@ -18,7 +18,9 @@
 
     <x-panel.card>
         <x-panel.section-head title="آخرین محصولات">
-            <x-panel.button :href="route('panel.products.create')" variant="primary">محصول جدید</x-panel.button>
+            @if (auth()->user()?->hasPanelPermission('products.manage'))
+                <x-panel.button :href="route('panel.products.create')" variant="primary">محصول جدید</x-panel.button>
+            @endif
         </x-panel.section-head>
 
         <x-panel.table-wrap>
@@ -42,7 +44,11 @@
                                 </x-panel.badge>
                             </td>
                             <td>
-                                <x-panel.button :href="route('panel.products.edit', $product)">ویرایش</x-panel.button>
+                                @if (auth()->user()?->hasPanelPermission('products.manage'))
+                                    <x-panel.button :href="route('panel.products.edit', $product)">ویرایش</x-panel.button>
+                                @else
+                                    <x-panel.badge>فقط مشاهده</x-panel.badge>
+                                @endif
                             </td>
                         </tr>
                     @empty
@@ -57,7 +63,9 @@
 
     <x-panel.card style="margin-top: 16px;">
         <x-panel.section-head title="آخرین پست‌ها">
-            <x-panel.button :href="route('panel.posts.create')" variant="primary">پست جدید</x-panel.button>
+            @if (auth()->user()?->hasPanelPermission('posts.manage'))
+                <x-panel.button :href="route('panel.posts.create')" variant="primary">پست جدید</x-panel.button>
+            @endif
         </x-panel.section-head>
 
         <x-panel.table-wrap>
@@ -83,7 +91,11 @@
                                 </x-panel.badge>
                             </td>
                             <td>
-                                <x-panel.button :href="route('panel.posts.edit', $post)">ویرایش</x-panel.button>
+                                @if (auth()->user()?->hasPanelPermission('posts.manage'))
+                                    <x-panel.button :href="route('panel.posts.edit', $post)">ویرایش</x-panel.button>
+                                @else
+                                    <x-panel.badge>فقط مشاهده</x-panel.badge>
+                                @endif
                             </td>
                         </tr>
                     @empty

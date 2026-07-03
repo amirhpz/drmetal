@@ -45,6 +45,25 @@
 
         @error('is_panel_user') <span class="error-text">{{ $message }}</span> @enderror
     </div>
+
+    <div class="form-field is-wide">
+        <label for="panel_role_id">سطح دسترسی پنل</label>
+        <select id="panel_role_id" name="panel_role_id" @disabled(auth()->user()->is($user))>
+            <option value="">دسترسی کامل بدون نقش محدودکننده</option>
+            @foreach ($roles as $role)
+                <option value="{{ $role->id }}" @selected((string) old('panel_role_id', $user->panel_role_id) === (string) $role->id)>
+                    {{ $role->name }}
+                </option>
+            @endforeach
+        </select>
+        @if (auth()->user()->is($user))
+            <input type="hidden" name="panel_role_id" value="{{ $user->panel_role_id }}">
+            <span class="panel-help">برای جلوگیری از قفل شدن حساب فعلی، سطح دسترسی خودتان از این فرم تغییر نمی‌کند.</span>
+        @else
+            <span class="panel-help">اگر نقشی انتخاب نشود، کاربر دارای دسترسی کامل پنل خواهد بود. برای محدودسازی، یک سطح دسترسی انتخاب کنید.</span>
+        @endif
+        @error('panel_role_id') <span class="error-text">{{ $message }}</span> @enderror
+    </div>
 </div>
 
 <x-panel.form-actions :back="route('panel.users.index')" />
