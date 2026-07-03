@@ -9,7 +9,7 @@ class RefreshMetalPricesCommand extends Command
 {
     protected $signature = 'metals:refresh-prices';
 
-    protected $description = 'Fetch latest gold, aluminum, dollar and euro prices from BRS API.';
+    protected $description = 'Fetch latest configured metal and currency prices from BRS API.';
 
     public function handle(MetalPriceService $metalPriceService): int
     {

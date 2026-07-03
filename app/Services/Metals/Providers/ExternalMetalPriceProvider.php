@@ -36,9 +36,11 @@ class ExternalMetalPriceProvider implements MetalPriceProvider
             return collect();
         }
 
+        $symbols = config('metals.homepage_symbols', []);
+
         return collect($response['metal_precious'] ?? [])
-            ->where('symbol', 'XAUUSD')
-            ->merge(collect($response['metal_base'] ?? [])->where('symbol', 'Al'))
+            ->merge(collect($response['metal_base'] ?? []))
+            ->whereIn('symbol', $symbols)
             ->values();
     }
 
@@ -51,7 +53,7 @@ class ExternalMetalPriceProvider implements MetalPriceProvider
         }
 
         return collect($response['currency'] ?? [])
-            ->whereIn('symbol', ['USD', 'EUR'])
+            ->whereIn('symbol', config('metals.homepage_symbols', []))
             ->values();
     }
 
@@ -124,12 +126,6 @@ class ExternalMetalPriceProvider implements MetalPriceProvider
 
     private function displayName(string $symbol, string $fallback): string
     {
-        return match ($symbol) {
-            'XAUUSD' => 'طلا',
-            'Al' => 'آلومینیوم',
-            'USD' => 'دلار',
-            'EUR' => 'یورو',
-            default => $fallback,
-        };
+        return config('metals.display_names.'.$symbol, $fallback);
     }
 }
