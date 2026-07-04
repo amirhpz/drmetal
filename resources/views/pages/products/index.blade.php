@@ -41,7 +41,7 @@
                                 <p>{{ $fallback['meta'] }}</p>
                                 <div class="spec-row"><span>استعلام روز</span></div>
                                 <div class="card-actions">
-                                    <a class="btn btn-secondary" href="{{ route('contact.index') }}#quote">استعلام قیمت</a>
+                                    <button class="btn btn-secondary" type="button" data-quote-modal-open>استعلام قیمت</button>
                                 </div>
                             </div>
                         </article>
@@ -71,7 +71,7 @@
     <section class="section">
         <div class="container final-cta">
             <h2>برای دریافت مشخصات فنی و پیش‌فاکتور، درخواست خود را ارسال کنید.</h2>
-            <a class="btn btn-primary" href="{{ route('contact.index') }}#quote">ثبت درخواست قیمت</a>
+            <button class="btn btn-primary" type="button" data-quote-modal-open>ثبت درخواست قیمت</button>
         </div>
     </section>
 </x-layouts.app>

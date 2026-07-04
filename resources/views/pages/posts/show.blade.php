@@ -99,7 +99,7 @@
         </div>
     </section>
 
-    <a class="article-floating-cta" href="{{ route('contact.index') }}#quote">درخواست همکاری</a>
+    <button class="article-floating-cta" type="button" data-quote-modal-open>درخواست همکاری</button>
 
     @if ($relatedPosts->isNotEmpty())
         <section class="section section-muted related-articles related-articles-mobile">

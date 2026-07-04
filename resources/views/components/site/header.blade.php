@@ -1,15 +1,20 @@
 @php($companyName = \App\Support\SiteSettings::get('company.name', config('company.name_fa', 'صنایع متالورژی دکتر متال')))
+@php($logo = \App\Support\SiteSettings::get('company.logo'))
 
 <header class="site-header">
     <div class="container header-inner">
         <a class="brand" href="{{ route('home') }}" aria-label="{{ $companyName }}">
             <span class="brand-mark" aria-hidden="true">
-                <svg viewBox="0 0 48 48" role="img">
-                    <path d="M24 4 42 14v20L24 44 6 34V14L24 4Z" />
-                    <path d="M15 19 24 14l9 5-9 5-9-5Z" />
-                    <path d="M15 25v7l9 5 9-5v-7" />
-                    <path d="M24 24v13" />
-                </svg>
+                @if ($logo)
+                    <img src="{{ asset($logo) }}" alt="">
+                @else
+                    <svg viewBox="0 0 48 48" role="img">
+                        <path d="M24 4 42 14v20L24 44 6 34V14L24 4Z" />
+                        <path d="M15 19 24 14l9 5-9 5-9-5Z" />
+                        <path d="M15 25v7l9 5 9-5v-7" />
+                        <path d="M24 24v13" />
+                    </svg>
+                @endif
             </span>
             <span>
                 <strong>{{ $companyName }}</strong>
@@ -34,6 +39,6 @@
             <a href="{{ route('contact.index') }}" @class(['is-active' => request()->routeIs('contact.*')])>تماس با ما</a>
         </nav>
 
-        <a class="btn btn-primary header-cta" href="{{ route('contact.index') }}#quote">درخواست همکاری</a>
+        <button class="btn btn-primary header-cta" type="button" data-quote-modal-open>ثبت سفارش</button>
     </div>
 </header>

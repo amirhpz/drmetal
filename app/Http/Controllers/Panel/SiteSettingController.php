@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\SiteSetting;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\View\View;
 
 class SiteSettingController extends Controller
@@ -39,18 +40,29 @@ class SiteSettingController extends Controller
         $request->validate([
             'settings' => ['nullable', 'array'],
             'settings.*' => ['nullable', 'string', 'max:5000'],
+            'files' => ['nullable', 'array'],
+            'files.company.logo' => ['nullable', 'image', 'mimes:jpg,jpeg,png,webp', 'max:2048'],
+            'files.company.favicon' => ['nullable', 'file', 'mimes:ico,png,jpg,jpeg,webp', 'max:1024'],
+            'remove_files' => ['nullable', 'array'],
         ]);
 
         $settings = $request->input('settings', []);
+        $uploadedFiles = $request->file('files', []);
+        $removeFiles = $request->input('remove_files', []);
 
         foreach ($definitions as $group) {
             foreach ($group['fields'] as $field) {
                 $currentValue = SiteSetting::query()->where('key', $field['key'])->value('value');
+                $value = array_key_exists($field['key'], $settings) ? $settings[$field['key']] : ($currentValue ?? '');
+
+                if ($field['type'] === 'image') {
+                    $value = $this->resolveUploadedSettingValue($field['key'], $currentValue, $uploadedFiles, $removeFiles);
+                }
 
                 SiteSetting::query()->updateOrCreate(
                     ['key' => $field['key']],
                     [
-                        'value' => array_key_exists($field['key'], $settings) ? $settings[$field['key']] : ($currentValue ?? ''),
+                        'value' => $value,
                         'group' => $group['key'],
                         'type' => $field['type'],
                     ],
@@ -74,6 +86,8 @@ class SiteSettingController extends Controller
                 'title' => 'برند و اطلاعات شرکت',
                 'description' => 'نام برند، شعار، معرفی کوتاه و اطلاعات ثابت شرکت.',
                 'fields' => [
+                    ['key' => 'company.logo', 'label' => 'لوگوی سایت', 'type' => 'image'],
+                    ['key' => 'company.favicon', 'label' => 'فاوآیکن', 'type' => 'image'],
                     ['key' => 'company.name', 'label' => 'نام فارسی شرکت', 'type' => 'text', 'default' => config('company.name_fa')],
                     ['key' => 'company.name_en', 'label' => 'نام انگلیسی شرکت', 'type' => 'text', 'default' => config('company.name_en')],
                     ['key' => 'company.legal_name', 'label' => 'نام حقوقی', 'type' => 'text', 'default' => config('company.legal_name_fa')],
@@ -126,5 +140,37 @@ class SiteSettingController extends Controller
                 ],
             ],
         ];
+    }
+
+    /**
+     * @param array<string, mixed> $uploadedFiles
+     * @param array<string, mixed> $removeFiles
+     */
+    private function resolveUploadedSettingValue(string $key, ?string $currentValue, array $uploadedFiles, array $removeFiles): string
+    {
+        $file = data_get($uploadedFiles, $key);
+
+        if ($file) {
+            $this->deleteStoredPublicAsset($currentValue);
+
+            return 'storage/'.$file->store('settings', 'public');
+        }
+
+        if (data_get($removeFiles, $key)) {
+            $this->deleteStoredPublicAsset($currentValue);
+
+            return '';
+        }
+
+        return $currentValue ?? '';
+    }
+
+    private function deleteStoredPublicAsset(?string $path): void
+    {
+        if (! $path || ! str_starts_with($path, 'storage/')) {
+            return;
+        }
+
+        Storage::disk('public')->delete(substr($path, strlen('storage/')));
     }
 }

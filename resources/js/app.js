@@ -226,8 +226,10 @@ document.addEventListener('DOMContentLoaded', () => {
     const quoteModal = document.querySelector('[data-quote-modal]');
     const quoteForm = document.querySelector('[data-quote-form]');
     const toast = document.querySelector('[data-site-toast]');
-    const openQuoteButton = document.querySelector('[data-quote-modal-open]');
+    const openQuoteButtons = document.querySelectorAll('[data-quote-modal-open]');
     const closeQuoteButtons = document.querySelectorAll('[data-quote-modal-close]');
+    const quoteProductSelect = document.querySelector('[data-quote-product-select]');
+    const quoteModalTitle = document.querySelector('[data-quote-modal-title]');
 
     const showToast = (message, type = 'success') => {
         if (!toast) {
@@ -256,11 +258,21 @@ document.addEventListener('DOMContentLoaded', () => {
         if (isOpen) {
             quoteModal.querySelector('input[name="contact_person"]')?.focus();
         } else {
-            openQuoteButton?.focus();
+            openQuoteButtons[0]?.focus();
         }
     };
 
-    openQuoteButton?.addEventListener('click', () => setQuoteModalOpen(true));
+    openQuoteButtons.forEach((button) => {
+        button.addEventListener('click', () => setQuoteModalOpen(true));
+    });
+
+    quoteProductSelect?.addEventListener('change', () => {
+        if (!quoteModalTitle) {
+            return;
+        }
+
+        quoteModalTitle.textContent = quoteProductSelect.selectedOptions[0]?.textContent?.trim() || 'ثبت سریع درخواست سفارش';
+    });
 
     closeQuoteButtons.forEach((button) => {
         button.addEventListener('click', () => setQuoteModalOpen(false));

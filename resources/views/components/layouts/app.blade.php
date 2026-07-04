@@ -1,4 +1,6 @@
-@props(['pageClass' => null])
+@props(['pageClass' => null, 'quoteProduct' => null])
+
+@php($favicon = \App\Support\SiteSettings::get('company.favicon'))
 
 <!doctype html>
 <html lang="fa" dir="rtl">
@@ -12,6 +14,10 @@
     <meta property="og:description" content="{{ $metaDescription ?? \App\Support\SiteSettings::get('seo.default_description', '') }}">
     <meta property="og:type" content="website">
     <meta property="og:url" content="{{ url()->current() }}">
+    @if ($favicon)
+        <link rel="icon" href="{{ asset($favicon) }}">
+        <link rel="shortcut icon" href="{{ asset($favicon) }}">
+    @endif
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 <body @class([$pageClass])>
@@ -27,6 +33,8 @@
         </main>
 
         <x-site.footer />
+        <button class="mobile-quote-fab" type="button" data-quote-modal-open>ثبت سفارش</button>
+        <x-site.quote-modal :products="$quoteProducts ?? collect()" :selected-product="$quoteProduct" />
     </div>
 </body>
 </html>
