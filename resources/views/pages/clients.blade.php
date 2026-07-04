@@ -3,25 +3,30 @@
 
     <section class="section">
         <div class="container">
-            <x-site.section-heading eyebrow="Clients" title="شرکای صنعتی و مشتریان" />
-            <div class="client-grid large">
-                @foreach ($clients as $client)
-                    <article class="client-card">
-                        @if ($client->logo)
-                            <img class="client-logo-image" src="{{ asset($client->logo) }}" alt="{{ $client->name }}" loading="lazy">
-                        @else
-                            <span class="client-logo-text">{{ mb_substr($client->name, 0, 1) }}</span>
-                        @endif
-                        <strong>{{ $client->name }}</strong>
-                        @if ($client->english_name)
-                            <span>{{ $client->english_name }}</span>
-                        @endif
-                        @if ($client->industry)
-                            <small>{{ $client->industry }}</small>
-                        @endif
-                    </article>
-                @endforeach
+            <div class="section-title-row">
+                <x-site.section-heading eyebrow="Clients" title="شرکای صنعتی و مشتریان" />
+                <div class="swiper-controls" aria-label="کنترل اسلایدر مشتریان">
+                    <button class="swiper-button" type="button" data-client-prev aria-label="قبلی">›</button>
+                    <button class="swiper-button" type="button" data-client-next aria-label="بعدی">‹</button>
+                </div>
             </div>
+            <div class="client-swiper" data-client-swiper>
+                <div class="client-carousel-track">
+                    @foreach ($clients as $client)
+                        <div class="client-slide">
+                            <article class="client-card client-carousel-card">
+                                @if ($client->logo)
+                                    <img class="client-carousel-image" src="{{ asset($client->logo) }}" alt="{{ $client->name }}" loading="lazy">
+                                @else
+                                    <span class="client-carousel-image client-carousel-placeholder">{{ mb_substr($client->name, 0, 1) }}</span>
+                                @endif
+                                <strong>{{ $client->name }}</strong>
+                            </article>
+                        </div>
+                    @endforeach
+                </div>
+            </div>
+            <div class="client-pagination" data-client-pagination aria-label="صفحه‌بندی مشتریان"></div>
         </div>
     </section>
 
