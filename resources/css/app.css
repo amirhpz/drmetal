@@ -258,7 +258,7 @@ p {
     flex: 0 0 auto;
     place-items: center;
     color: var(--color-accent);
-    background: var(--color-primary);
+    /*background: var(--color-primary);*/
     border-radius: 10px;
 }
 
