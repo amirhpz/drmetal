@@ -34,7 +34,7 @@
             <a href="{{ route('services.index') }}">فلزات رنگین</a>
         </div>
         <div>
-            <h3>ارتباط با فروش</h3>
+            <h3>ارتباط با واحد فروش</h3>
             <a href="tel:{{ $contact['contact.sales_phone'] ?? '' }}">{{ $contact['contact.sales_phone'] ?? 'ثبت نشده' }}</a>
             <a href="https://{{ $website }}" target="_blank" rel="noopener">{{ $website }}</a>
             <p>{{ $contact['contact.working_hours'] ?? 'ساعات کاری ثبت نشده' }}</p>

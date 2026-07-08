@@ -12,7 +12,7 @@
                 <strong>تلفن</strong><span>{{ $contactSettings['contact.main_phone'] ?? 'ثبت نشده' }}</span></article>
             <article class="contact-info-card">
                 <x-site.icon name="phone"/>
-                <strong>موبایل فروش</strong><span>{{ $contactSettings['contact.sales_phone'] ?? 'ثبت نشده' }}</span>
+                <strong>واحد فروش</strong><span>{{ $contactSettings['contact.sales_phone'] ?? 'ثبت نشده' }}</span>
             </article>
             <article class="contact-info-card">
                 <x-site.icon name="mail"/>
